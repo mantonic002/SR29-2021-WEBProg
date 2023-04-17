@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Vaxes</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/usersTableStyle.css}">
+</head>
+<body>
+<div><h2>Manage users</h2></div>
+<div>
+  <a th:href="@{/vaxes/new}"><h3>Add new Vax</h3></a>
+</div>
+<div>
+  <table>
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Country
+      <th>Manufacturer Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="vax : ${listVaxes}">
+      <tr>
+        <td>[[${vax.id}]]</td>
+        <td>[[${vax.name}]]</td>
+        <td>[[${vax.availableNum}]]</td>
+        <td>[[${vax.manufacturer.name}]]</td>
+
+        <td>
+          <a th:href="@{'/vaxes/edit/' + ${vax.id}}"><h6>Edit</h6></a>
+          <a th:href="@{'/vaxes/delete/' + ${vax.id}}"><h6>Delete</h6></a>
+        </td>
+      </tr>
+
+    </th:block>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

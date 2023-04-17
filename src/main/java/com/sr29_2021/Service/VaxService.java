@@ -2,6 +2,7 @@ package com.sr29_2021.Service;
 
 import com.sr29_2021.Model.Vax;
 import com.sr29_2021.Repository.IVaxRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @Service
 public class VaxService {
 
+    @Autowired
     private IVaxRepository repo;
 
     public List<Vax> listAll() { return(List<Vax>) repo.findAll(); }
