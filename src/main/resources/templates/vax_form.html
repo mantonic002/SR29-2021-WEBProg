@@ -18,6 +18,14 @@
     <label>Available number</label>
     <input type="number" th:field="*{availableNum}" required minlength="5" maxlength="50">
 
+    <label>Manufacturer</label>
+    <label>
+      <select th:field="*{manufacturerId}">
+        <option th:each="man : ${manufacturers}" th:value="${man.getId()}" th:text="${man.getName()}">
+        </option>
+      </select>
+    </label>
+
     <button type="submit">Save</button>
     <button type="button" onclick="cancelForm()">Cancel</button>
   </form>

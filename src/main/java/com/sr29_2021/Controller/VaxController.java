@@ -32,13 +32,17 @@ public class VaxController {
 
     @GetMapping("/vaxes/new")
     public String showNewForm(Model model){
+        List<Manufacturer> manufacturers = manService.listAll();
+
         model.addAttribute("vax", new Vax());
+        model.addAttribute("manufacturers", manufacturers);
         model.addAttribute("pageTitle", "Add new vax");
         return "vax_form";
     }
 
     @PostMapping("/vaxes/save")
     public String saveVax(Vax Vax, RedirectAttributes ra) {
+        Vax.setManufacturer(manService.get(Vax.getManufacturerId()));
         service.save(Vax);
         ra.addFlashAttribute("message", "Vax has been saved");
         return "redirect:/vaxes";
@@ -46,9 +50,11 @@ public class VaxController {
 
     @GetMapping("/vaxes/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
-
+        List<Manufacturer> manufacturers = manService.listAll();
         Vax Vax = service.get(id);
         model.addAttribute("vax", Vax);
+        model.addAttribute("manufacturers", manufacturers);
+        model.addAttribute("manufacturer", Vax.getManufacturer());
         model.addAttribute("pageTitle",
                 "Edit vax (name:" + Vax.getName() + ", manufacturer:" + Vax.getManufacturer().getName() + ")");
         return "vax_form";

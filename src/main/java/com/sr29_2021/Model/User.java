@@ -1,6 +1,5 @@
 package com.sr29_2021.Model;
 
-import jakarta.persistence.*;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;

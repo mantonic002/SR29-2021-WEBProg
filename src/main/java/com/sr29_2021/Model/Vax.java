@@ -5,6 +5,7 @@ public class Vax {
     private String name;
     private Integer availableNum;
     private Manufacturer manufacturer;
+    private int manufacturerId;
 
     public Vax(Integer id, String name, Integer availableNum, Manufacturer manufacturer) {
         this.id = id;
@@ -21,6 +22,14 @@ public class Vax {
     }
 
     public Vax() {
+    }
+
+    public int getManufacturerId() {
+        return manufacturerId;
+    }
+
+    public void setManufacturerId(int manufacturerId) {
+        this.manufacturerId = manufacturerId;
     }
 
     public Integer getId() {
@@ -53,6 +62,7 @@ public class Vax {
 
     public void setManufacturer(Manufacturer manufacturer) {
         this.manufacturer = manufacturer;
+        this.manufacturerId = manufacturer.getId();
     }
 
     @Override
