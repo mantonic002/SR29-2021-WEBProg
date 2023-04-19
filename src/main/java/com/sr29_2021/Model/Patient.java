@@ -58,6 +58,7 @@ public class Patient {
 
     public void setUser(User user) {
         this.user = user;
+        this.userId = user.getId();
     }
 
     @Override

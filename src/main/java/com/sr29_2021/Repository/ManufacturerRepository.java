@@ -1,6 +1,7 @@
 package com.sr29_2021.Repository;
 
 import com.sr29_2021.Model.Manufacturer;
+import com.sr29_2021.Repository.Interfaces.IManufacturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;

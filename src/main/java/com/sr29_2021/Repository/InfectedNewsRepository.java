@@ -1,7 +1,7 @@
 package com.sr29_2021.Repository;
 
 import com.sr29_2021.Model.InfectedNews;
-import com.sr29_2021.Model.News;
+import com.sr29_2021.Repository.Interfaces.IInfectedNewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class InfectedNewsRepository implements IInfectedNewsRepository{
+public class InfectedNewsRepository implements IInfectedNewsRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

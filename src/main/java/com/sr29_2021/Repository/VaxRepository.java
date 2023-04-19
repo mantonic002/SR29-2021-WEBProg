@@ -2,6 +2,8 @@ package com.sr29_2021.Repository;
 
 import com.sr29_2021.Model.Manufacturer;
 import com.sr29_2021.Model.Vax;
+import com.sr29_2021.Repository.Interfaces.IManufacturerRepository;
+import com.sr29_2021.Repository.Interfaces.IVaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -17,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class VaxRepository implements IVaxRepository{
+public class VaxRepository implements IVaxRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

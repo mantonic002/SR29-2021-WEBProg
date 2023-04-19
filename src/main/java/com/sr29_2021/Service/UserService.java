@@ -2,7 +2,7 @@ package com.sr29_2021.Service;
 
 import com.sr29_2021.Exceptions.UserNotFoundException;
 import com.sr29_2021.Model.User;
-import com.sr29_2021.Repository.IUserRepository;
+import com.sr29_2021.Repository.Interfaces.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

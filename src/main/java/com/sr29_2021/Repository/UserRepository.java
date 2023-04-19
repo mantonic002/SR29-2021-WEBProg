@@ -2,6 +2,7 @@ package com.sr29_2021.Repository;
 
 import com.sr29_2021.Model.User;
 import com.sr29_2021.Model.UserRole;
+import com.sr29_2021.Repository.Interfaces.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;

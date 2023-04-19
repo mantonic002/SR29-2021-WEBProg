@@ -1,4 +1,4 @@
-package com.sr29_2021.Repository;
+package com.sr29_2021.Repository.Interfaces;
 
 import com.sr29_2021.Model.Manufacturer;
 

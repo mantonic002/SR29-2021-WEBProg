@@ -1,7 +1,7 @@
 package com.sr29_2021.Service;
 
 import com.sr29_2021.Model.Vax;
-import com.sr29_2021.Repository.IVaxRepository;
+import com.sr29_2021.Repository.Interfaces.IVaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
