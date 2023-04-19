@@ -7,7 +7,7 @@ public class InfectedNews {
     private Integer infected;
     private Integer tested;
     private Integer hospitalized;
-    private Integer on_respirator;
+    private Integer onRespirator;
     private Integer infectedAllTime;
     private LocalDateTime dateTime;
 
@@ -15,17 +15,18 @@ public class InfectedNews {
                         Integer infected,
                         Integer tested,
                         Integer hospitalized,
-                        Integer on_respirator,
+                        Integer onRespirator,
                         Integer infectedAllTime,
                         LocalDateTime dateTime) {
         this.id = id;
         this.infected = infected;
         this.tested = tested;
         this.hospitalized = hospitalized;
-        this.on_respirator = on_respirator;
+        this.onRespirator = onRespirator;
         this.infectedAllTime = infectedAllTime;
         this.dateTime = dateTime;
     }
+
 
     public InfectedNews() {
         this.dateTime = LocalDateTime.now();
@@ -63,12 +64,12 @@ public class InfectedNews {
         this.hospitalized = hospitalized;
     }
 
-    public Integer getOn_respirator() {
-        return on_respirator;
+    public Integer getOnRespirator() {
+        return onRespirator;
     }
 
-    public void setOn_respirator(Integer on_respirator) {
-        this.on_respirator = on_respirator;
+    public void setOnRespirator(Integer onRespirator) {
+        this.onRespirator = onRespirator;
     }
 
     public Integer getInfectedAllTime() {
@@ -94,7 +95,7 @@ public class InfectedNews {
                 ", infected=" + infected +
                 ", tested=" + tested +
                 ", hospitalized=" + hospitalized +
-                ", on_respirator=" + on_respirator +
+                ", onRaspirator=" + onRespirator +
                 ", infectedAllTime=" + infectedAllTime +
                 ", dateTime=" + dateTime +
                 '}';

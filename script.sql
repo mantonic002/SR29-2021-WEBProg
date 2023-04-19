@@ -101,4 +101,13 @@ create table buy_request(
         unique(id)
 )
 
+CREATE FUNCTION get_total_infected(news_id INT) RETURNS INT
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+  DECLARE total_infected INT;
+  SELECT SUM(infected) INTO total_infected FROM infected_news WHERE date_time <= (select date_time from infected_news
+                                                                                                  where id = news_id);
+  RETURN total_infected;
+END;
 
