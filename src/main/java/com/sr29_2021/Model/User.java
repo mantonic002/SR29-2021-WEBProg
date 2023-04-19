@@ -57,29 +57,6 @@ public class User {
         this.registrationTime = registrationTime;
     }
 
-    public User(Integer id,
-                String email,
-                String firstName,
-                String lastName,
-                String password,
-                String jmbg,
-                String address,
-                String phoneNum,
-                LocalDate birthDate
-                ) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.jmbg = jmbg;
-        this.address = address;
-        this.phoneNum = phoneNum;
-        this.role = UserRole.PATIENT;
-        this.birthDate = birthDate;
-        this.registrationTime = LocalDateTime.now();
-    }
-
     public User() {
         this.role = UserRole.PATIENT;
         this.registrationTime = LocalDateTime.now();
