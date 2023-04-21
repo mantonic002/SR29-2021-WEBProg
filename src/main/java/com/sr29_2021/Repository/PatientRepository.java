@@ -37,12 +37,16 @@ public class PatientRepository implements IPatientRepository {
             Integer id = resultSet.getInt(index++);
             Boolean vaxxed = resultSet.getBoolean(index++);
             Integer recievedDoses = resultSet.getInt(index++);
-            LocalDateTime lastDose = resultSet.getTimestamp(index++).toLocalDateTime();
+            Timestamp lastDose = resultSet.getTimestamp(index++);
+            LocalDateTime lastDoseTime = null;
+            if(lastDose!=null){
+                lastDoseTime = lastDose.toLocalDateTime();
+            }
             User user = userRepo.findOne(id);
 
             Patient patient = Patients.get(id);
             if (patient == null) {
-                patient = new Patient(id, vaxxed, recievedDoses, lastDose, user);
+                patient = new Patient(id, vaxxed, recievedDoses, lastDoseTime, user);
                 Patients.put(patient.getUserId(), patient);
             }
         }
@@ -95,8 +99,12 @@ public class PatientRepository implements IPatientRepository {
                 preparedStatement.setInt(index++, patient.getUserId());
                 preparedStatement.setBoolean(index++, patient.getVaxxed());
                 preparedStatement.setInt(index++, patient.getReceivedDoses());
-                Timestamp timestamp = Timestamp.valueOf(patient.getLastDoseDate());
-                preparedStatement.setString(index++, timestamp.toString());
+                if(patient.getLastDoseDate()!=null){
+                    Timestamp timestamp = Timestamp.valueOf(patient.getLastDoseDate());
+                    preparedStatement.setString(index++, timestamp.toString());
+                }else {
+                    preparedStatement.setString(index++, null);
+                }
 
                 return preparedStatement;
             }
@@ -104,7 +112,7 @@ public class PatientRepository implements IPatientRepository {
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         boolean success = jdbcTemplate.update(preparedStatementCreator, keyHolder) == 1;
-        return  success ? 1 : 0;
+        return success ? 1 : 0;
     }
 
     @Transactional

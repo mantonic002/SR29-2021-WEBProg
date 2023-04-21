@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>[[${pageTitle}]]</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/userAddStyle.css}">
+</head>
+<body>
+<div>
+  <div><h2>[[${pageTitle}]]</h2></div>
+
+  <form th:action="@{/patients/update}" method="post" th:object="${patient}">
+    <input type="hidden" th:field="*{userId}">
+
+    <label>Vaxxed</label>
+    <input type="checkbox" th:field="*{vaxxed}" required minlength="5" maxlength="50">
+
+    <label>Received doses:</label>
+    <input type="number" th:field="*{receivedDoses}" required minlength="5" maxlength="50">
+
+    <label>Last dose time</label>
+    <input onfocus="(this.type='datetime-local')" th:field="*{lastDoseDate}" type="text"/>
+
+    <button type="submit">Save</button>
+    <button type="button" onclick="cancelForm()">Cancel</button>
+  </form>
+</div>
+
+<script type="text/javascript">
+  function cancelForm(){
+    window.location = "[[@{/patients}]]"
+  }
+</script>
+
+</body>
+</html>

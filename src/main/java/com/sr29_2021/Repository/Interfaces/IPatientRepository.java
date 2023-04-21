@@ -1,7 +1,6 @@
 package com.sr29_2021.Repository.Interfaces;
 
 import com.sr29_2021.Model.Patient;
-import com.sr29_2021.Model.User;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@
     <div>
         <div><h2>[[${pageTitle}]]</h2></div>
 
-        <form th:action="@{/users/save}" method="post" th:object="${user}">
+        <form th:action="@{${method}}" th:method="post" th:object="${user}">
             <input type="hidden" th:field="*{id}">
             <label>Email</label>
             <input type="email" th:field="*{email}" required minlength="8" maxlength="45"/>

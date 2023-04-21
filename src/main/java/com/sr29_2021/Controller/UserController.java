@@ -1,7 +1,10 @@
 package com.sr29_2021.Controller;
 
 import com.sr29_2021.Exceptions.UserNotFoundException;
+import com.sr29_2021.Model.Patient;
 import com.sr29_2021.Model.User;
+import com.sr29_2021.Model.UserRole;
+import com.sr29_2021.Service.PatientService;
 import com.sr29_2021.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,9 @@ public class UserController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private PatientService patientService;
+
     @GetMapping("/users")
     public String showUserList(Model model){
         List<User> listUsers = service.listAll();
@@ -31,14 +37,28 @@ public class UserController {
     @GetMapping("/users/new")
     public String showNewForm(Model model){
         model.addAttribute("user", new User());
+        model.addAttribute("method", "/users/save");
         model.addAttribute("pageTitle", "Add new user");
         return "user_form";
     }
 
     @PostMapping("/users/save")
-    public String saveUser(User user, RedirectAttributes ra) {
+    public String saveUser(User user, RedirectAttributes ra) throws UserNotFoundException {
         service.save(user);
+        User userNew = service.get(user.getEmail());
+
+        if(user.getRole() == UserRole.PATIENT){
+            Patient patient = new Patient(userNew);;
+            patientService.save(patient);
+        }
         ra.addFlashAttribute("message", "User has been saved");
+        return "redirect:/users";
+    }
+
+    @PostMapping ("/users/update")
+    public String updateUser(User user, RedirectAttributes ra) {
+        service.update(user);
+        ra.addFlashAttribute("message", "User has been updated");
         return "redirect:/users";
     }
 
@@ -47,6 +67,7 @@ public class UserController {
         try{
             User user = service.get(id);
             model.addAttribute("user", user);
+            model.addAttribute("method", "/users/update");
             model.addAttribute("pageTitle", "Edit user (Email:" + user.getEmail() + ")");
             return "user_form";
 
@@ -58,6 +79,7 @@ public class UserController {
     @GetMapping("users/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes ra){
         service.delete(id);
+        patientService.delete(id);
         ra.addFlashAttribute("message", "User has been deleted");
         return "redirect:/users";
 

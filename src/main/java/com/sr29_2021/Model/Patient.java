@@ -17,6 +17,14 @@ public class Patient {
         this.user = user;
     }
 
+    public Patient(User User) {
+        vaxxed = false;
+        receivedDoses = 0;
+        lastDoseDate = null;
+        this.user = User;
+        this.userId = User.getId();
+    }
+
     public Patient() {
     }
 
@@ -58,7 +66,6 @@ public class Patient {
 
     public void setUser(User user) {
         this.user = user;
-        this.userId = user.getId();
     }
 
     @Override

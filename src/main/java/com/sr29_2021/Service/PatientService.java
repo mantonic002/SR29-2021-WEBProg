@@ -16,11 +16,11 @@ public class PatientService {
     public List<Patient> listAll() { return(List<Patient>) repo.findAll(); }
 
     public void save(Patient patient) {
-        if(repo.findOne(patient.getUserId()) != null){
-            repo.update(patient);
-        } else{
-            repo.save(patient);
-        }
+        repo.save(patient);
+    }
+
+    public void update(Patient patient){
+        repo.update(patient);
     }
 
     public Patient get(Integer id) {

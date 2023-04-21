@@ -19,15 +19,20 @@ public class UserService {
     }
 
     public void save(User user) {
-        if(repo.findOne(user.getId()) != null){
-            repo.update(user);
-        }   else{
-            repo.save(user);
-        }
+        repo.save(user);
+    }
+
+    public void update(User user) {
+        repo.update(user);
     }
 
     public User get(Integer id) throws UserNotFoundException {
         User result = repo.findOne(id);
+        return result;
+    }
+
+    public User get(String email) throws UserNotFoundException {
+        User result = repo.findOne(email);
         return result;
     }
 
