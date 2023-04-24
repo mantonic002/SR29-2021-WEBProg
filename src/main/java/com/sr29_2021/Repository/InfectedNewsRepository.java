@@ -119,7 +119,7 @@ public class InfectedNewsRepository implements IInfectedNewsRepository {
                 infectedNews.getTested(),
                 infectedNews.getHospitalized(),
                 infectedNews.getOnRespirator(),
-                Timestamp.valueOf(infectedNews.getDateTime().toString()),
+                Timestamp.valueOf(infectedNews.getDateTime()).toString(),
                 infectedNews.getId()) == 1;
 
         return success ? 1 : 0;

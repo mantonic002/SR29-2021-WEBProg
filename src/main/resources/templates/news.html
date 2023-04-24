@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage manufacturers</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/usersTableStyle.css}">
+</head>
+<body>
+<div><h2>Manage news</h2></div>
+<div>
+    <a th:href="@{/news/new}"><h3>Add news</h3></a>
+</div>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Content</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="news : ${listNews}">
+            <tr>
+                <td>[[${news.id}]]</td>
+                <td>[[${news.name}]]</td>
+                <td>[[${news.content}]]</td>
+                <td>[[${news.dateTime}]]</td>
+                <td>
+                    <a th:href="@{'/news/edit/' + ${news.id}}"><h6>Edit</h6></a>
+                    <a th:href="@{'/news/delete/' + ${news.id}}"><h6>Delete</h6></a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

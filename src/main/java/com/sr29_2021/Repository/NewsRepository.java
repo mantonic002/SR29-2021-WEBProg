@@ -51,7 +51,7 @@ public class NewsRepository implements INewsRepository {
     @Override
     public News findOne(Integer id) {
         String sql =
-                "SELECT n.id, n.name, n.content, n,date_time " +
+                "SELECT n.id, n.name, n.content, n.date_time " +
                         "FROM news n " +
                         "WHERE n.id = ? " +
                         "ORDER BY n.id";
@@ -68,7 +68,7 @@ public class NewsRepository implements INewsRepository {
     @Override
     public List<News> findAll() {
         String sql =
-                "SELECT n.id, n.name, n.content, n,date_time " +
+                "SELECT n.id, n.name, n.content, n.date_time " +
                         "FROM news n " +
                         "ORDER BY n.id";
 
@@ -112,7 +112,7 @@ public class NewsRepository implements INewsRepository {
         boolean success = jdbcTemplate.update(sql,
                 news.getName(),
                 news.getContent(),
-                Timestamp.valueOf(news.getDateTime().toString()),
+                Timestamp.valueOf(news.getDateTime()).toString(),
                 news.getId()) == 1;
 
         return success ? 1 : 0;

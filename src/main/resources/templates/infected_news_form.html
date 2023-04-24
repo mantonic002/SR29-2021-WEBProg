@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>[[${pageTitle}]]</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/userAddStyle.css}">
+</head>
+<body>
+<div>
+  <div><h2>[[${pageTitle}]]</h2></div>
+
+  <form th:action="@{/infectedNews/save}" method="post" th:object="${news}">
+    <input type="hidden" th:field="*{id}">
+
+    <label>Infected</label>
+    <input type="number" th:field="*{infected}" required>
+
+    <label>Tested</label>
+    <input type="number" th:field="*{tested}" required>
+
+    <label>Hospitalized</label>
+    <input type="number" th:field="*{hospitalized}" required>
+
+    <label>On respirator</label>
+    <input type="number" th:field="*{onRespirator}" required>
+
+    <button type="submit">Save</button>
+    <button type="button" onclick="cancelForm()">Cancel</button>
+  </form>
+</div>
+
+<script type="text/javascript">
+  function cancelForm(){
+    window.location = "[[@{/infectedNews}]]"
+  }
+</script>
+
+</body>
+</html>
