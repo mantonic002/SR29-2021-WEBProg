@@ -3,38 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage manufacturers</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/usersTableStyle.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/newsStyle.css}">
 </head>
 <body>
 <div><h2>Manage news</h2></div>
 <div>
     <a th:href="@{/news/new}"><h3>Add news</h3></a>
 </div>
-<div>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Content</th>
-            <th>Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="news : ${listNews}">
-            <tr>
-                <td>[[${news.id}]]</td>
-                <td>[[${news.name}]]</td>
-                <td>[[${news.content}]]</td>
-                <td>[[${news.dateTime}]]</td>
-                <td>
-                    <a th:href="@{'/news/edit/' + ${news.id}}"><h6>Edit</h6></a>
-                    <a th:href="@{'/news/delete/' + ${news.id}}"><h6>Delete</h6></a>
-                </td>
-            </tr>
-        </th:block>
-        </tbody>
-    </table>
+
+<div class="card-container">
+    <th:block th:each="news : ${listNews}">
+        <div class="card">
+            <h3>[[${news.name}]]</h3>
+            <h4>[[${news.dateTime}]]</h4>
+            <p>[[${news.content}]]</p>
+            <div class="dropdown">
+                <button class="dropbtn">&#9660;</button>
+                <div class="dropdown-content">
+                    <a th:href="@{'/news/edit/' + ${news.id}}">Edit</a>
+                    <a th:href="@{'/news/delete/' + ${news.id}}">Delete</a>
+                </div>
+            </div>
+        </div>
+    </th:block>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".dropbtn").click(function() {
+            $(this).next(".dropdown-content").toggleClass("show");
+        });
+    });
+</script>
 </body>
 </html>
