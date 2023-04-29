@@ -1,7 +1,8 @@
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f1f1f1;
+    width: 80%;
+    margin: 0 auto;
 }
 
 h2 {
@@ -20,66 +21,93 @@ a:hover {
     text-decoration: underline;
 }
 
-.card-container {
+.news-container,
+.form-container{
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: stretch;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* or any other value for the gap between cards */
 }
 
-
-.card {
-    position: relative;
+.news,
+form{
     display: inline-block;
-    width: 300px;
-    margin: 10px;
-    padding: 10px;
+    width: 48%;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease-in-out;
-    overflow: hidden;
-}
-.card:hover {
-    transform: scale(1.05);
-    z-index: 1;
+    vertical-align: top;
+    word-wrap: break-word;
 }
 
-.dropbtn {
-    background-color: #ffffff; /* set background color */
-    border: none; /* remove border */
-    color: #000000; /* set font color */
-    font-size: 16px; /* set font size */
-    cursor: pointer; /* change cursor on hover */
-    padding: 4px 8px; /* add padding */
-    min-width: 50px; /* set minimum width */
-    text-align: left; /* align text to left */
+.news h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
-.dropdown {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: inline-block;
+.news h4 {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 10px;
 }
-.dropdown-content {
-    display: none;
-    position: absolute;
-    z-index: 1;
-    background-color: #f9f9f9;
-    min-width: 100px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+
+.news p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
-.dropdown-content a {
-    color: #333;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
+
+.news a {
+    margin-right: 20px;
 }
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
+
 .show {
     display: block;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    height: 150px;
+    overflow-y: auto; /* Add vertical scrollbar */
+    wrap: soft; /* Allow text to wrap to next line */
+}
+
+button[type="submit"],
+button[type="button"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+    background-color: #3e8e41;
 }

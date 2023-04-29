@@ -2,28 +2,35 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Manage manufacturers</title>
+    <title>Manage news</title>
     <link rel="stylesheet" type="text/css" th:href="@{/newsStyle.css}">
 </head>
 <body>
 <div><h2>Manage news</h2></div>
-<div>
-    <a th:href="@{/news/new}"><h3>Add news</h3></a>
+<div class="form-container">
+    <form th:action="@{/news/save}" method="post" th:object="${news}">
+        <input type="hidden" th:field="*{id}">
+
+        <label>Name</label>
+        <input type="text" th:field="*{name}" required minlength="5" maxlength="50">
+
+        <label>Content</label>
+        <textarea th:field="*{content}" required></textarea>
+
+        <button type="submit">Add</button>
+    </form>
 </div>
 
-<div class="card-container">
+<div class="news-container">
     <th:block th:each="news : ${listNews}">
-        <div class="card">
+        <div class="news">
             <h3>[[${news.name}]]</h3>
             <h4>[[${news.dateTime}]]</h4>
             <p>[[${news.content}]]</p>
-            <div class="dropdown">
-                <button class="dropbtn">&#9660;</button>
-                <div class="dropdown-content">
-                    <a th:href="@{'/news/edit/' + ${news.id}}">Edit</a>
-                    <a th:href="@{'/news/delete/' + ${news.id}}">Delete</a>
-                </div>
-            </div>
+            <a th:href="@{'/news/edit/' + ${news.id}}">EDIT</a>
+            <a th:href="@{'/news/delete/' + ${news.id}}" onclick="return confirm('Are you sure you want to delete news?')">
+                DELETE
+            </a>
         </div>
     </th:block>
 </div>
