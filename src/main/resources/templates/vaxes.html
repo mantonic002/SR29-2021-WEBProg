@@ -3,40 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <title>Manage Vaxes</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/usersTableStyle.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div><h2>Manage vaxxes</h2></div>
-<div>
-  <a th:href="@{/vaxes/new}"><h3>Add new Vax</h3></a>
-</div>
-<div>
-  <table>
+<div th:replace="~{layouts/commonHeader :: header}">...</div>
+
+<div style="width: 80rem; margin: 20px auto;">
+
+  <table class="table">
     <thead>
     <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Amount left</th>
-      <th>Manufacturer Name</th>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Amount left</th>
+      <th scope="col">Manufacturer Name</th>
     </tr>
     </thead>
     <tbody>
     <th:block th:each="vax : ${listVaxes}">
-      <tr>
+      <tr scope="row">
         <td>[[${vax.id}]]</td>
         <td>[[${vax.name}]]</td>
         <td>[[${vax.availableNum}]]</td>
         <td>[[${vax.manufacturer.name}]]</td>
 
         <td>
-          <a th:href="@{'/vaxes/edit/' + ${vax.id}}"><h6>Edit</h6></a>
-          <a th:href="@{'/vaxes/delete/' + ${vax.id}}"><h6>Delete</h6></a>
+          <a th:href="@{'/news/edit/' + ${vax.id}}" class="btn btn-secondary btn-sm">Edit</a>
+          <a th:href="@{'/news/delete/' + ${vax.id}}" onclick="return confirm('Are you sure you want to delete news?')" class="btn btn-secondary btn-sm">
+            Delete
+          </a>
         </td>
       </tr>
 
     </th:block>
     </tbody>
   </table>
+
+  <a th:href="@{/vaxes/new}" class="btn btn-secondary btn-sm" style="margin: 20px">Add new Vax</a>
 </div>
 </body>
 </html>

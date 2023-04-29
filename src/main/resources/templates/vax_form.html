@@ -3,31 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <title>[[${pageTitle}]]</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/userAddStyle.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
 <div>
-  <div><h2>[[${pageTitle}]]</h2></div>
+  <div th:replace="~{layouts/commonHeader :: header}">...</div>
+  <div style="width: 60rem; margin: 0px auto;">
+    <h4>[[${pageTitle}]]</h4>
+  </div>
 
-  <form th:action="@{/vaxes/save}" method="post" th:object="${vax}">
+  <form th:action="@{/vaxes/save}" method="post" th:object="${vax}"
+        style="width: 60rem; margin: 20px auto;">
     <input type="hidden" th:field="*{id}">
 
-    <label>Name</label>
-    <input type="text" th:field="*{name}" required minlength="5" maxlength="50">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" th:field="*{name}" id="name" required minlength="5" maxlength="50">
+    </div>
 
-    <label>Available number</label>
-    <input type="number" th:field="*{availableNum}" required minlength="5" maxlength="50">
+    <div class="mb-3">
+    <label for="availableNum" class="form-label">Available number</label>
+    <input type="number" class="form-control" id="availableNum" th:field="*{availableNum}" required minlength="5" maxlength="50">
+    </div>
 
     <label>Manufacturer</label>
     <label>
-      <select th:field="*{manufacturerId}">
+      <select th:field="*{manufacturerId}" class="form-select" style="margin-bottom: 10px">
         <option th:each="man : ${manufacturers}" th:value="${man.getId()}" th:text="${man.getName()}">
         </option>
       </select>
     </label>
-
-    <button type="submit">Save</button>
-    <button type="button" onclick="cancelForm()">Cancel</button>
+    <br/>
+    <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+    <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
   </form>
 </div>
 

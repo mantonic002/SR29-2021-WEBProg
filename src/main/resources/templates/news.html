@@ -4,45 +4,38 @@
     <meta charset="UTF-8">
     <title>Manage news</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/newsStyle.css}">
 </head>
 <body>
-<div><h2>Manage news</h2></div>
-<div class="form-container">
-    <form th:action="@{/news/save}" method="post" th:object="${news}">
-        <input type="hidden" th:field="*{id}">
+<div th:replace="~{layouts/commonHeader :: header}">...</div>
 
-        <label>Name</label>
-        <input type="text" th:field="*{name}" required minlength="5" maxlength="50">
+<form th:action="@{/news/save}" method="post" th:object="${news}"
+      style="width: 80rem; margin: 20px auto;">
+    <input type="hidden" th:field="*{id}">
+    <div class="mb-3">
+        <label for="name" class="form-label">Title</label>
+        <input type="text" class="form-control" th:field="*{name}" id="name">
+    </div>
 
-        <label>Content</label>
-        <textarea th:field="*{content}" required></textarea>
+    <div class="input-group">
+        <span class="input-group-text">Content</span>
+        <textarea th:field="*{content}" class="form-control" aria-label="With textarea"></textarea>
+    </div>
+    <button type="submit" class="btn btn-secondary btn-sm" style="margin-top: 10px">Submit</button>
+</form>
 
-        <button type="submit" class="btn btn-primary">Add</button>
-    </form>
-</div>
-
-<div class="news-container">
-    <th:block th:each="news : ${listNews}">
-        <div class="news">
-            <h3>[[${news.name}]]</h3>
-            <h4>[[${news.dateTime}]]</h4>
-            <p>[[${news.content}]]</p>
-            <a th:href="@{'/news/edit/' + ${news.id}}">EDIT</a>
-            <a th:href="@{'/news/delete/' + ${news.id}}" onclick="return confirm('Are you sure you want to delete news?')">
-                DELETE
+<th:block th:each="news : ${listNews}">
+    <div class="card" style="width: 80rem; margin: 0 auto;">
+        <div class="card-body">
+            <h5 class="card-title">[[${news.name}]]</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">[[${news.dateTime}]]</h6>
+            <p class="card-text">[[${news.content}]]</p>
+            <a th:href="@{'/news/edit/' + ${news.id}}" class="btn btn-secondary btn-sm">Edit</a>
+            <a th:href="@{'/news/delete/' + ${news.id}}" onclick="return confirm('Are you sure you want to delete news?')" class="btn btn-secondary btn-sm">
+                Delete
             </a>
         </div>
-    </th:block>
-</div>
+    </div>
+</th:block>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $(".dropbtn").click(function() {
-            $(this).next(".dropdown-content").toggleClass("show");
-        });
-    });
-</script>
 </body>
 </html>

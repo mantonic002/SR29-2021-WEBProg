@@ -3,25 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <title>[[${pageTitle}]]</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/userAddStyle.css}">
-</head>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"></head>
 <body>
 <div>
-  <div><h2>[[${pageTitle}]]</h2></div>
+  <div th:replace="~{layouts/commonHeader :: header}">...</div>
+  <div style="width: 60rem; margin: 0px auto;">
+    <h4>[[${pageTitle}]]</h4>
+  </div>
 
-  <form th:action="@{/news/save}" method="post" th:object="${news}">
+  <form th:action="@{/news/save}" method="post" th:object="${news}"
+        style="width: 60rem; margin: 20px auto;">
     <input type="hidden" th:field="*{id}">
+    <div class="mb-3">
+      <label for="name" class="form-label">Title</label>
+      <input type="text" class="form-control" th:field="*{name}" id="name">
+    </div>
 
-    <label>Name</label>
-    <input type="text" th:field="*{name}" required minlength="5" maxlength="50">
-
-    <label>Content</label>
-    <input type="text" th:field="*{content}" required minlength="5" maxlength="500">
-
-
-    <button type="submit">Save</button>
-    <button type="button" onclick="cancelForm()">Cancel</button>
+    <div class="input-group" style="margin-bottom: 10px">
+      <span class="input-group-text">Content</span>
+      <textarea th:field="*{content}" class="form-control" aria-label="With textarea"></textarea>
+    </div>
+    <button type="submit" class="btn btn-secondary btn-sm" >Submit</button>
+    <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
   </form>
+
 </div>
 
 <script type="text/javascript">
