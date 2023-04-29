@@ -3,26 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>[[${pageTitle}]]</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/userAddStyle.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div>
-  <div><h2>[[${pageTitle}]]</h2></div>
+<div style="width: 60rem; margin: 0px auto;">
+  <div th:replace="~{layouts/commonHeader :: header}">...</div>
+  <div>
+    <h4>[[${pageTitle}]]</h4>
+  </div>
 
   <form th:action="@{/patients/update}" method="post" th:object="${patient}">
     <input type="hidden" th:field="*{userId}">
 
-    <label>Vaxxed</label>
-    <input type="checkbox" th:field="*{vaxxed}" required minlength="5" maxlength="50">
+    <div class="form-check form-switch">
+      <label for="vaxxed" class="form-check-label">Vaxxed</label>
+      <input class="form-check-input" type="checkbox" role="switch" id="vaxxed" th:field="*{vaxxed}">
+    </div>
 
-    <label>Received doses:</label>
-    <input type="number" th:field="*{receivedDoses}" required minlength="5" maxlength="50">
+    <div class="mb-3">
+      <label for="doses" class="form-label">Received doses:</label>
+      <input type="number" class="form-control" id="doses" th:field="*{receivedDoses}" required minlength="5" maxlength="50">
+    </div>
 
-    <label>Last dose time</label>
-    <input onfocus="(this.type='datetime-local')" th:field="*{lastDoseDate}" type="text"/>
+    <label for="lastDose" class="form-label">Last dose time</label>
+    <input onfocus="(this.type='datetime-local')" class="form-control" id="lastDose" th:field="*{lastDoseDate}" type="text"
+    style="margin-bottom: 10px"/>
 
-    <button type="submit">Save</button>
-    <button type="button" onclick="cancelForm()">Cancel</button>
+    <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+    <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
   </form>
 </div>
 

@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage patients</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/usersTableStyle.css}">
-</head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"></head>
 <body>
-<div><h2>Manage patients</h2></div>
-<div>
-    <table>
+<div th:replace="~{layouts/commonHeader :: header}">...</div>
+<div style="width: 80rem; margin: 20px auto;">
+    <table class="table">
         <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>LastName</th>
-            <th>Vaxxed</th>
-            <th>Received doses</th>
-            <th>Last Dose</th>
-            <th/>
-        </tr>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">LastName</th>
+                <th scope="col">Vaxxed</th>
+                <th scope="col">Received doses</th>
+                <th scope="col">Last Dose</th>
+                <th scope="col"/>
+            </tr>
         </thead>
         <tbody>
         <th:block th:each="patient : ${listPatients}">
-            <tr>
+            <tr scope="row">
                 <td>[[${patient.userId}]]</td>
                 <td>[[${patient.user.firstName}]]</td>
                 <td>[[${patient.user.lastName}]]</td>
@@ -31,8 +30,8 @@
                 <td th:unless="${patient.lastDoseDate == null}">[[${patient.lastDoseDate}]]</td>
                 <td th:if="${patient.lastDoseDate == null}">not vaccinated</td>
                 <td>
-                    <a th:href="@{'/patients/edit/' + ${patient.userId}}"><h6>Edit</h6></a>
-                    <a th:href="@{'/patients/delete/' + ${patient.userId}}"><h6>Delete</h6></a>
+                    <a th:href="@{'/patients/edit/' + ${patient.userId}}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a th:href="@{'/patients/delete/' + ${patient.userId}}" class="btn btn-secondary btn-sm">Delete</a>
                 </td>
             </tr>
 

@@ -6,14 +6,13 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div>
+<div style="width: 60rem; margin: 0px auto;">
   <div th:replace="~{layouts/commonHeader :: header}">...</div>
-  <div style="width: 60rem; margin: 0px auto;">
+  <div>
     <h4>[[${pageTitle}]]</h4>
   </div>
 
-  <form th:action="@{/vaxes/save}" method="post" th:object="${vax}"
-        style="width: 60rem; margin: 20px auto;">
+  <form th:action="@{/vaxes/save}" method="post" th:object="${vax}">
     <input type="hidden" th:field="*{id}">
 
     <div class="mb-3">
