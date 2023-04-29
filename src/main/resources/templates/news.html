@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage news</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/newsStyle.css}">
 </head>
 <body>
@@ -17,7 +18,7 @@
         <label>Content</label>
         <textarea th:field="*{content}" required></textarea>
 
-        <button type="submit">Add</button>
+        <button type="submit" class="btn btn-primary">Add</button>
     </form>
 </div>
 
