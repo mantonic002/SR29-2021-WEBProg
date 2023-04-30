@@ -40,24 +40,26 @@
     <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
 </form>
 
-<th:block th:each="news : ${listNews}">
-    <div class="card" style="width: 80rem; margin: 0 auto;">
-        <div class="card-body">
-            <h5 class="card-title">Infected news:</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">[[${news.dateTime}]]</h6>
-            <p class="card-text">
-                Number of tested patients:          [[${news.tested}]]<br/>
-                Number of infected patients:        [[${news.infected}]]<br/>
-                Number of hospitalized patients:    [[${news.hospitalized}]]<br/>
-                Number of patients on respirators:  [[${news.onRespirator}]]<br/>
-                Infected all time:                  [[${news.infectedAllTime}]]
-            </p>
-            <a th:href="@{'/infectedNews/edit/' + ${news.id}}" class="btn btn-secondary btn-sm">Edit</a>
-            <a th:href="@{'/infectedNews/delete/' + ${news.id}}" onclick="return confirm('Are you sure you want to delete news?')" class="btn btn-secondary btn-sm">
-                Delete
-            </a>
+<div class="d-flex flex-row flex-wrap justify-content-center">
+    <th:block th:each="news : ${listNews}">
+        <div class="card m-2" style="width: 20rem;">
+            <div class="card-body">
+                <h5 class="card-title">Infected news:</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">[[${news.dateTime}]]</h6>
+                <p class="card-text">
+                    Number of tested patients:          [[${news.tested}]]<br/>
+                    Number of infected patients:        [[${news.infected}]]<br/>
+                    Number of hospitalized patients:    [[${news.hospitalized}]]<br/>
+                    Number of patients on respirators:  [[${news.onRespirator}]]<br/>
+                    Infected all time:                  [[${news.infectedAllTime}]]
+                </p>
+                <a th:href="@{'/infectedNews/edit/' + ${news.id}}" class="btn btn-secondary btn-sm">Edit</a>
+                <a th:href="@{'/infectedNews/delete/' + ${news.id}}" onclick="return confirm('Are you sure you want to delete news?')" class="btn btn-secondary btn-sm">
+                    Delete
+                </a>
+            </div>
         </div>
-    </div>
-</th:block>
+    </th:block>
+</div>
 </body>
 </html>
