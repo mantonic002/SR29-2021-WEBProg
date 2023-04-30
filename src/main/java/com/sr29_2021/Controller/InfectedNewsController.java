@@ -23,6 +23,7 @@ public class InfectedNewsController {
     @GetMapping("/infectedNews")
     public String showNewsList(Model model){
         List<InfectedNews> list = service.listAll();
+        model.addAttribute("news", new InfectedNews());
         model.addAttribute("listNews", list);
         return "infected_news";
     }

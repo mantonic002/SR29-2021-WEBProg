@@ -3,45 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage manufacturers</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/usersTableStyle.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div><h2>Manage news</h2></div>
-<div>
-    <a th:href="@{/infectedNews/new}"><h3>Add news</h3></a>
-</div>
-<div>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Infected</th>
-            <th>Tested</th>
-            <th>Hospitalized</th>
-            <th>On respirator</th>
-            <th>Infected all time</th>
-            <th>Date and time</th>
-            <th/>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="news : ${listNews}">
-            <tr>
-                <td>[[${news.id}]]</td>
-                <td>[[${news.infected}]]</td>
-                <td>[[${news.tested}]]</td>
-                <td>[[${news.hospitalized}]]</td>
-                <td>[[${news.onRespirator}]]</td>
-                <td>[[${news.infectedAllTime}]]</td>
-                <td>[[${news.dateTime}]]</td>
-                <td>
-                    <a th:href="@{'/infectedNews/edit/' + ${news.id}}"><h6>Edit</h6></a>
-                    <a th:href="@{'/infectedNews/delete/' + ${news.id}}"><h6>Delete</h6></a>
-                </td>
-            </tr>
-        </th:block>
-        </tbody>
-    </table>
-</div>
+<div th:replace="~{layouts/commonHeader :: header}">...</div>
+
+<form th:action="@{/infectedNews/save}" method="post" th:object="${news}"
+      style="width: 60rem; margin: 20px auto;">
+    <input type="hidden" th:field="*{id}">
+
+    <div class="row mb-3">
+        <div class="col">
+            <label for="infected" class="form-label">Infected</label>
+            <input type="number" class="form-control" id="infected" th:field="*{infected}" required>
+        </div>
+
+        <div class="col">
+            <label for="tested" class="form-label">Tested</label>
+            <input type="number" class="form-control" id="tested" th:field="*{tested}" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col">
+            <label for="hospitalized" class="form-label">Hospitalized</label>
+            <input type="number" class="form-control" id="hospitalized" th:field="*{hospitalized}" required>
+        </div>
+
+        <div class="col">
+            <label for="onRespirator" class="form-label">On respirator</label>
+            <input type="number" class="form-control" id="onRespirator" th:field="*{onRespirator}" required>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-secondary btn-sm" >Submit</button>
+    <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
+</form>
+
+<th:block th:each="news : ${listNews}">
+    <div class="card" style="width: 80rem; margin: 0 auto;">
+        <div class="card-body">
+            <h5 class="card-title">Infected news:</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">[[${news.dateTime}]]</h6>
+            <p class="card-text">
+                Number of tested patients:          [[${news.tested}]]<br/>
+                Number of infected patients:        [[${news.infected}]]<br/>
+                Number of hospitalized patients:    [[${news.hospitalized}]]<br/>
+                Number of patients on respirators:  [[${news.onRespirator}]]<br/>
+                Infected all time:                  [[${news.infectedAllTime}]]
+            </p>
+            <a th:href="@{'/infectedNews/edit/' + ${news.id}}" class="btn btn-secondary btn-sm">Edit</a>
+            <a th:href="@{'/infectedNews/delete/' + ${news.id}}" onclick="return confirm('Are you sure you want to delete news?')" class="btn btn-secondary btn-sm">
+                Delete
+            </a>
+        </div>
+    </div>
+</th:block>
 </body>
 </html>

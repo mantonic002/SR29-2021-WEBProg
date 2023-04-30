@@ -3,24 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>[[${pageTitle}]]</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/userAddStyle.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-  <div>
-    <div><h2>[[${pageTitle}]]</h2></div>
+  <div style="width: 60rem; margin: 0px auto;">
+    <div th:replace="~{layouts/commonHeader :: header}">...</div>
+    <div>
+      <h4>[[${pageTitle}]]</h4>
+    </div>
 
     <form th:action="@{/manufacturers/save}" method="post" th:object="${manufacturer}">
       <input type="hidden" th:field="*{id}">
 
-      <label>Name</label>
-      <input type="text" th:field="*{name}" required minlength="5" maxlength="50">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" th:field="*{name}" id="name" required minlength="5" maxlength="50">
+      </div>
 
-      <label>Country</label>
-      <input type="text" th:field="*{country}" required minlength="5" maxlength="50">
+      <div class="mb-3">
+        <label for="country" class="form-label">Country</label>
+        <input type="text" class="form-control" id="country" th:field="*{country}" required minlength="5" maxlength="50">
+      </div>
 
-
-      <button type="submit">Save</button>
-      <button type="button" onclick="cancelForm()">Cancel</button>
+      <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+      <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
     </form>
   </div>
 

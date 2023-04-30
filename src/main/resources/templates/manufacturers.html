@@ -3,37 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage manufacturers</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/usersTableStyle.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-    <div><h2>Manage users</h2></div>
-    <div>
-        <a th:href="@{/manufacturers/new}"><h3>Add new manufacturer</h3></a>
-    </div>
-    <div>
-        <table>
+    <div th:replace="~{layouts/commonHeader :: header}">...</div>
+
+
+    <div style="width: 80rem; margin: 20px auto;">
+        <table class="table">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Country</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Country</th>
                 </tr>
             </thead>
             <tbody>
                 <th:block th:each="manufacturer : ${listManufacturers}">
-                    <tr>
+                    <tr scope="row">
                         <td>[[${manufacturer.id}]]</td>
                         <td>[[${manufacturer.name}]]</td>
                         <td>[[${manufacturer.country}]]</td>
                         <td>
-                            <a th:href="@{'/manufacturers/edit/' + ${manufacturer.id}}"><h6>Edit</h6></a>
-                            <a th:href="@{'/manufacturers/delete/' + ${manufacturer.id}}"><h6>Delete</h6></a>
+                            <a th:href="@{'/manufacturers/edit/' + ${manufacturer.id}}" class="btn btn-secondary btn-sm">Edit</a>
+                            <a th:href="@{'/manufacturers/delete/' + ${manufacturer.id}}" class="btn btn-secondary btn-sm">Delete</a>
                         </td>
                     </tr>
-
                 </th:block>
             </tbody>
         </table>
+
+        <a th:href="@{/manufacturers/new}" class="btn btn-secondary btn-sm" style="margin: 20px">Add new manufacturer</a>
     </div>
 </body>
 </html>

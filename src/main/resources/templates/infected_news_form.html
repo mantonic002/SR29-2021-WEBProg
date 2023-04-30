@@ -3,29 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <title>[[${pageTitle}]]</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/userAddStyle.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"></head>
 </head>
 <body>
 <div>
-  <div><h2>[[${pageTitle}]]</h2></div>
+  <div th:replace="~{layouts/commonHeader :: header}">...</div>
+  <div style="width: 60rem; margin: 0px auto;">
+    <h4>[[${pageTitle}]]</h4>
+  </div>
 
-  <form th:action="@{/infectedNews/save}" method="post" th:object="${news}">
+  <form th:action="@{/infectedNews/save}" method="post" th:object="${news}"
+        style="width: 60rem; margin: 20px auto;">
     <input type="hidden" th:field="*{id}">
 
-    <label>Infected</label>
-    <input type="number" th:field="*{infected}" required>
+    <div class="row mb-3">
+      <div class="col">
+        <label for="infected" class="form-label">Infected</label>
+        <input type="number" class="form-control" id="infected" th:field="*{infected}" required>
+      </div>
 
-    <label>Tested</label>
-    <input type="number" th:field="*{tested}" required>
+      <div class="col">
+        <label for="tested" class="form-label">Tested</label>
+        <input type="number" class="form-control" id="tested" th:field="*{tested}" required>
+      </div>
+    </div>
 
-    <label>Hospitalized</label>
-    <input type="number" th:field="*{hospitalized}" required>
+    <div class="row mb-3">
+      <div class="col">
+        <label for="hospitalized" class="form-label">Hospitalized</label>
+        <input type="number" class="form-control" id="hospitalized" th:field="*{hospitalized}" required>
+      </div>
 
-    <label>On respirator</label>
-    <input type="number" th:field="*{onRespirator}" required>
+      <div class="col">
+        <label for="onRespirator" class="form-label">On respirator</label>
+        <input type="number" class="form-control" id="onRespirator" th:field="*{onRespirator}" required>
+      </div>
+    </div>
 
-    <button type="submit">Save</button>
-    <button type="button" onclick="cancelForm()">Cancel</button>
+    <button type="submit" class="btn btn-secondary btn-sm" >Submit</button>
+    <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
   </form>
 </div>
 
