@@ -31,6 +31,11 @@ public class UserService {
         return result;
     }
 
+    public User get(String email,String password) throws UserNotFoundException {
+        User result = repo.findOne(email,password);
+        return result;
+    }
+
     public User get(String email) throws UserNotFoundException {
         User result = repo.findOne(email);
         return result;

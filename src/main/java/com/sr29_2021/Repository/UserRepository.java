@@ -93,7 +93,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User findOne(String email, String sifra) {
+    public User findOne(String email, String password) {
         String sql =
                 "SELECT kor.id, kor.email, kor.first_name, kor.last_name, kor.password, kor.jmbg, kor.address, kor.phone_num, kor.user_role, kor.registration_date, kor.birth_date " +
                         "FROM users kor " +
@@ -102,7 +102,7 @@ public class UserRepository implements IUserRepository {
                         "ORDER BY kor.id";
 
         UserRowCallBackHandler rowCallbackHandler = new UserRowCallBackHandler();
-        jdbcTemplate.query(sql, rowCallbackHandler, email, sifra);
+        jdbcTemplate.query(sql, rowCallbackHandler, email, password);
 
         if (rowCallbackHandler.getUsers().size() == 0) {
             return null;
