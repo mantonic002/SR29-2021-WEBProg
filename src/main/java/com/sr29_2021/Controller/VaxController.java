@@ -1,9 +1,14 @@
 package com.sr29_2021.Controller;
 
+import com.sr29_2021.Exceptions.UserNotFoundException;
 import com.sr29_2021.Model.Manufacturer;
+import com.sr29_2021.Model.UserRole;
 import com.sr29_2021.Model.Vax;
 import com.sr29_2021.Service.ManufacturerService;
+import com.sr29_2021.Service.UserService;
 import com.sr29_2021.Service.VaxService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,16 +23,24 @@ import java.util.List;
 public class VaxController {
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private VaxService service;
 
     @Autowired
     private ManufacturerService manService;
 
     @GetMapping("/vaxes")
-    public String showVaxList(Model model){
+    public String showVaxList(Model model, HttpServletRequest request) throws UserNotFoundException {
         List<Vax> list = service.listAll();
         model.addAttribute("listVaxes", list);
-        return "vaxes";
+
+        Cookie[] cookies = request.getCookies();
+        if(userService.checkCookies(cookies, UserRole.ADMIN)){
+            return "vaxes";
+        }
+        return "access_denied";
     }
 
     @GetMapping("/vaxes/new")

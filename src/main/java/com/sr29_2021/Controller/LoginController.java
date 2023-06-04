@@ -23,7 +23,6 @@ import java.util.UUID;
 
 @Controller
 public class LoginController {
-    public static final String USER_KEY = "USER";
 
     @Autowired
     private UserService service;
@@ -34,6 +33,7 @@ public class LoginController {
     public String showLogin(Model model) {
         return "index";
     }
+
     @PostMapping("/login/save")
     public String login(@RequestParam("email") String email, @RequestParam("password") String password,
                         HttpServletRequest request, HttpServletResponse response, Model model,
