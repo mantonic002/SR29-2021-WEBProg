@@ -2,7 +2,6 @@ package com.sr29_2021.Controller;
 
 import com.sr29_2021.Exceptions.UserNotFoundException;
 import com.sr29_2021.Model.Manufacturer;
-import com.sr29_2021.Model.User;
 import com.sr29_2021.Model.UserRole;
 import com.sr29_2021.Service.ManufacturerService;
 import com.sr29_2021.Service.UserService;
@@ -54,7 +53,7 @@ public class ManufacturerController {
     }
 
     @GetMapping("/manufacturers/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+    public String showEditForm(@PathVariable("id") Integer id, Model model){
 
             Manufacturer manufacturer = service.get(id);
             model.addAttribute("manufacturer", manufacturer);

@@ -6,7 +6,6 @@ import com.sr29_2021.Model.UserRole;
 import com.sr29_2021.Repository.Interfaces.IUserRepository;
 import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class UserService {
     private IUserRepository repo;
 
     public List<User> listAll(){
-        return (List<User>) repo.findAll();
+        return repo.findAll();
     }
 
     public void save(User user) {
@@ -30,18 +29,15 @@ public class UserService {
     }
 
     public User get(Integer id) throws UserNotFoundException {
-        User result = repo.findOne(id);
-        return result;
+        return repo.findOne(id);
     }
 
     public User get(String email,String password) throws UserNotFoundException {
-        User result = repo.findOne(email,password);
-        return result;
+        return repo.findOne(email,password);
     }
 
     public User get(String email) throws UserNotFoundException {
-        User result = repo.findOne(email);
-        return result;
+        return repo.findOne(email);
     }
 
     public void delete(Integer id) {
@@ -53,11 +49,7 @@ public class UserService {
             for (Cookie cookie : cookies) {
                 if(cookie.getValue().contains("@")){
                     User temp = this.get(cookie.getValue());
-                    if(temp.getRole().equals(role)){
-                        return true;
-                    }else{
-                        return false;
-                    }
+                    return temp.getRole().equals(role);
                 }
             }
         }

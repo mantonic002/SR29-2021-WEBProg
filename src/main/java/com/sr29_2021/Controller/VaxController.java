@@ -67,7 +67,7 @@ public class VaxController {
     }
 
     @GetMapping("/vaxes/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra, HttpServletRequest request) throws UserNotFoundException {
+    public String showEditForm(@PathVariable("id") Integer id, Model model, HttpServletRequest request) throws UserNotFoundException {
         List<Manufacturer> manufacturers = manService.listAll();
         Vax Vax = service.get(id);
         model.addAttribute("vax", Vax);

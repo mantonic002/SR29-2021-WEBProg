@@ -2,10 +2,8 @@ package com.sr29_2021.Controller;
 
 import com.sr29_2021.Exceptions.UserNotFoundException;
 import com.sr29_2021.Model.*;
-import com.sr29_2021.Service.ManufacturerService;
 import com.sr29_2021.Service.PatientService;
 import com.sr29_2021.Service.UserService;
-import com.sr29_2021.Service.VaxService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -48,7 +44,7 @@ public class PatientController {
     }
 
     @GetMapping("/patients/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+    public String showEditForm(@PathVariable("id") Integer id, Model model){
         Patient patient = service.get(id);
         model.addAttribute("patient", patient);
         model.addAttribute("pageTitle",

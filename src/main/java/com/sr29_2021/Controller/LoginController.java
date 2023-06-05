@@ -27,17 +27,17 @@ public class LoginController {
     @Autowired
     private UserService service;
 
-    private Map<String, String> loggedInUsers = new HashMap<>();
+    private final Map<String, String> loggedInUsers = new HashMap<>();
 
     @GetMapping("/login")
-    public String showLogin(Model model) {
+    public String showLogin() {
         return "index";
     }
 
     @PostMapping("/login/save")
     public String login(@RequestParam("email") String email, @RequestParam("password") String password,
-                        HttpServletRequest request, HttpServletResponse response, Model model,
-                        RedirectAttributes redirectAttributes, @CookieValue(value = "sessionID", defaultValue = "") String sessionID)
+                        HttpServletResponse response, Model model,
+                        @CookieValue(value = "sessionID", defaultValue = "") String sessionID)
             throws UserNotFoundException {
 
         User user = service.get(email, password);
