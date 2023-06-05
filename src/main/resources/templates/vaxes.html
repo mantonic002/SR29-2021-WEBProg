@@ -28,8 +28,8 @@
         <td>[[${vax.manufacturer.name}]]</td>
 
         <td>
-          <a th:href="@{'/news/edit/' + ${vax.id}}" class="btn btn-secondary btn-sm">Edit</a>
-          <a th:href="@{'/news/delete/' + ${vax.id}}" onclick="return confirm('Are you sure you want to delete news?')" class="btn btn-secondary btn-sm">
+          <a th:href="@{'/vaxes/edit/' + ${vax.id}}" class="btn btn-secondary btn-sm">Edit</a>
+          <a th:href="@{'/vaxes/delete/' + ${vax.id}}" onclick="return confirm('Are you sure you want to delete news?')" class="btn btn-secondary btn-sm">
             Delete
           </a>
         </td>

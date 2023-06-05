@@ -53,11 +53,9 @@ public class UserService {
             for (Cookie cookie : cookies) {
                 if(cookie.getValue().contains("@")){
                     User temp = this.get(cookie.getValue());
-                    if(!temp.getRole().equals(role)){
-//                        return "vaccinesTable";
+                    if(temp.getRole().equals(role)){
                         return true;
                     }else{
-//                        return "redirect:/home";
                         return false;
                     }
                 }

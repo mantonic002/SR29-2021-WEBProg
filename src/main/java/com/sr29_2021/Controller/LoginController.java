@@ -54,7 +54,7 @@ public class LoginController {
             }
 
             setLoggedInUser(sessionID, user.getEmail());
-            return "redirect:/user";
+            return "redirect:/news";
         } else {
             model.addAttribute("error", "Pogrešan email ili lozinka.");
             return "index";

@@ -1,14 +1,13 @@
 package com.sr29_2021.Controller;
 
 import com.sr29_2021.Exceptions.UserNotFoundException;
-import com.sr29_2021.Model.Manufacturer;
-import com.sr29_2021.Model.Patient;
-import com.sr29_2021.Model.User;
-import com.sr29_2021.Model.Vax;
+import com.sr29_2021.Model.*;
 import com.sr29_2021.Service.ManufacturerService;
 import com.sr29_2021.Service.PatientService;
 import com.sr29_2021.Service.UserService;
 import com.sr29_2021.Service.VaxService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,10 +29,15 @@ public class PatientController {
     private UserService userService;
 
     @GetMapping("/patients")
-    public String showPatientList(Model model) throws UserNotFoundException {
+    public String showPatientList(Model model, HttpServletRequest request) throws UserNotFoundException {
         List<Patient> list = service.listAll();
         model.addAttribute("listPatients", list);
-        return "patients";
+
+        Cookie[] cookies = request.getCookies();
+        if(userService.checkCookies(cookies, UserRole.ADMIN)){
+            return "patients";
+        }
+        return "access_denied";
     }
 
     @PostMapping("/patients/update")

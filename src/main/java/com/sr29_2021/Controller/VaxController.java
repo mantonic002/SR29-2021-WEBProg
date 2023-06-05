@@ -44,13 +44,18 @@ public class VaxController {
     }
 
     @GetMapping("/vaxes/new")
-    public String showNewForm(Model model){
+    public String showNewForm(Model model, HttpServletRequest request) throws UserNotFoundException {
         List<Manufacturer> manufacturers = manService.listAll();
 
         model.addAttribute("vax", new Vax());
         model.addAttribute("manufacturers", manufacturers);
         model.addAttribute("pageTitle", "Add new vax");
-        return "vax_form";
+
+        Cookie[] cookies = request.getCookies();
+        if(userService.checkCookies(cookies, UserRole.ADMIN)){
+            return "vax_form";
+        }
+        return "access_denied";
     }
 
     @PostMapping("/vaxes/save")
@@ -62,7 +67,7 @@ public class VaxController {
     }
 
     @GetMapping("/vaxes/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra, HttpServletRequest request) throws UserNotFoundException {
         List<Manufacturer> manufacturers = manService.listAll();
         Vax Vax = service.get(id);
         model.addAttribute("vax", Vax);
@@ -70,14 +75,24 @@ public class VaxController {
         model.addAttribute("manufacturer", Vax.getManufacturer());
         model.addAttribute("pageTitle",
                 "Edit vax (name:" + Vax.getName() + ", manufacturer:" + Vax.getManufacturer().getName() + ")");
-        return "vax_form";
+
+        Cookie[] cookies = request.getCookies();
+        if(userService.checkCookies(cookies, UserRole.ADMIN)){
+            return "vax_form";
+        }
+        return "access_denied";
     }
 
     @GetMapping("/vaxes/delete/{id}")
-    public String deleteVax(@PathVariable("id") Integer id, RedirectAttributes ra){
+    public String deleteVax(@PathVariable("id") Integer id, RedirectAttributes ra, HttpServletRequest request) throws UserNotFoundException {
         service.delete(id);
         ra.addFlashAttribute("message", "Vax has been deleted");
-        return "redirect:/vaxes";
+
+        Cookie[] cookies = request.getCookies();
+        if(userService.checkCookies(cookies, UserRole.ADMIN)){
+            return "redirect:/vaxes";
+        }
+        return "access_denied";
     }
 
 }
