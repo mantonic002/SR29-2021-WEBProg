@@ -17,4 +17,6 @@ public interface IVaxRepository {
     public int update(Vax vax);
 
     public int delete(Integer id);
+    public List<Vax> searchVaxes(String query);
+    public List<Vax> findSortedVaxes(String sort, String direction);
 }

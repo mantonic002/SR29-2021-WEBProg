@@ -29,4 +29,11 @@ public class VaxService {
     }
 
     public void delete(Integer id) { repo.delete(id); }
+
+    public List<Vax> findSortedVaxes(String sort, String direction) {
+        return repo.findSortedVaxes(sort, direction);
+    }
+    public List<Vax> searchVaxes(String query) {
+        return repo.searchVaxes(query);
+    }
 }

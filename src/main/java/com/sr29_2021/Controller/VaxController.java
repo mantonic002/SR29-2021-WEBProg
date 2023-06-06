@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -44,9 +45,22 @@ public class VaxController {
     }
 
     @GetMapping("/staff/vax")
-    public String showVaxStaff(Model model, HttpServletRequest request) throws UserNotFoundException {
-        List<Vax> list = service.listAll();
+    public String showVaxStaff(Model model,
+                               HttpServletRequest request ,
+                               @RequestParam(name="order", required = false) String order,
+                               @RequestParam(name = "orderBy", required = false) String orderBy) throws UserNotFoundException {
+
+        if(order == null) {
+            order = "id";
+        }
+        if(orderBy == null) {
+            orderBy = "asc";
+        }
+        System. out. println(order + orderBy);
+        List<Vax> list = service.findSortedVaxes(order, orderBy);
+        // Add the necessary attributes to the model
         model.addAttribute("listVaxes", list);
+        model.addAttribute("newOrderBy", orderBy.equals("asc") ? "desc" : "asc");
 
         Cookie[] cookies = request.getCookies();
         if(userService.checkCookies(cookies, UserRole.STAFF)){

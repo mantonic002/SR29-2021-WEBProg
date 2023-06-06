@@ -13,8 +13,20 @@
   <table class="table">
     <thead>
     <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Name</th>
+      <th>
+        <a th:href="@{/staff/vax(order='id', orderBy=${newOrderBy})}" style="text-decoration: none;">
+          Id ▼▲
+        </a>
+      </th>
+      <th>
+        <a th:href="@{/staff/vax(order='name', orderBy=${newOrderBy})}" style="text-decoration: none;">
+          Name ▼▲
+        </a>
+      </th>
+
+
+<!--      <th scope="col">Id</th>-->
+<!--      <th scope="col">Name</th>-->
       <th scope="col">Amount left</th>
       <th scope="col">Manufacturer Name</th>
       <th scope="col">Manufacturer Country</th>

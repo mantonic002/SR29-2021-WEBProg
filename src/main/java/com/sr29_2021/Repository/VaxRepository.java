@@ -140,4 +140,34 @@ public class VaxRepository implements IVaxRepository {
         String sql = "DELETE FROM vax WHERE id = ?";
         return jdbcTemplate.update(sql, id);
     }
+
+    @Override
+    public List<Vax> searchVaxes(String query) {
+        String sql =
+                "SELECT v.id, v.name, v.available_num, v.manufacturer_id " +
+                        "FROM vax v " +
+                        "WHERE v.name LIKE ? OR v.available_num LIKE ? OR v.manufacturer_id LIKE ? " +
+                        "ORDER BY v.id";
+
+        VaxRowCallbackHandler rowCallbackHandler = new VaxRowCallbackHandler();
+        String likeQuery = "%" + query + "%";
+        jdbcTemplate.query(sql, rowCallbackHandler, likeQuery, likeQuery, likeQuery);
+
+        return rowCallbackHandler.getVaxes();
+    }
+
+    @Override
+    public List<Vax> findSortedVaxes(String sort, String direction) {
+        String sql = "SELECT v.id, v.name, v.available_num, v.manufacturer_id " +
+                "FROM vax v " +
+                "ORDER BY " + sort + " " + direction;
+
+        VaxRowCallbackHandler rowCallbackHandler = new VaxRowCallbackHandler();
+        jdbcTemplate.query(sql, rowCallbackHandler);
+
+        if (rowCallbackHandler.getVaxes().isEmpty()) {
+            return null;
+        }
+        return rowCallbackHandler.getVaxes();
+    }
 }
