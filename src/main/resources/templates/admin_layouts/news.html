@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div th:replace="~{layouts/commonHeader :: header}">...</div>
+<div th:replace="~{layouts/admin_header :: header}">...</div>
 
 <form th:action="@{/news/save}" method="post" th:object="${news}"
       style="width: 80rem; margin: 20px auto;">

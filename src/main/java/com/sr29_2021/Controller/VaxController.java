@@ -38,7 +38,19 @@ public class VaxController {
 
         Cookie[] cookies = request.getCookies();
         if(userService.checkCookies(cookies, UserRole.ADMIN)){
-            return "vaxes";
+            return "admin_layouts/vaxes";
+        }
+        return "access_denied";
+    }
+
+    @GetMapping("/staff/vax")
+    public String showVaxStaff(Model model, HttpServletRequest request) throws UserNotFoundException {
+        List<Vax> list = service.listAll();
+        model.addAttribute("listVaxes", list);
+
+        Cookie[] cookies = request.getCookies();
+        if(userService.checkCookies(cookies, UserRole.STAFF)){
+            return "staff_layouts/staff_vaccine";
         }
         return "access_denied";
     }
@@ -53,7 +65,7 @@ public class VaxController {
 
         Cookie[] cookies = request.getCookies();
         if(userService.checkCookies(cookies, UserRole.ADMIN)){
-            return "vax_form";
+            return "admin_layouts/vax_form";
         }
         return "access_denied";
     }
@@ -78,7 +90,7 @@ public class VaxController {
 
         Cookie[] cookies = request.getCookies();
         if(userService.checkCookies(cookies, UserRole.ADMIN)){
-            return "vax_form";
+            return "admin_layouts/vax_form";
         }
         return "access_denied";
     }

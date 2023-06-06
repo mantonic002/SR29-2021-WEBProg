@@ -33,7 +33,7 @@ public class ManufacturerController {
 
         Cookie[] cookies = request.getCookies();
         if(userService.checkCookies(cookies, UserRole.ADMIN)){
-            return "manufacturers";
+            return "admin_layouts/manufacturers";
         }
         return "access_denied";
     }
@@ -42,7 +42,7 @@ public class ManufacturerController {
     public String showNewForm(Model model){
         model.addAttribute("manufacturer", new Manufacturer());
         model.addAttribute("pageTitle", "Add new manufacturer");
-        return "manufacturer_form";
+        return "admin_layouts/manufacturer_form";
     }
 
     @PostMapping("/manufacturers/save")
@@ -59,7 +59,7 @@ public class ManufacturerController {
             model.addAttribute("manufacturer", manufacturer);
             model.addAttribute("pageTitle",
                     "Edit manufacturer (name:" + manufacturer.getName() + ", country:" + manufacturer.getCountry() + ")");
-            return "manufacturer_form";
+            return "admin_layouts/manufacturer_form";
     }
 
     @GetMapping("/manufacturers/delete/{id}")

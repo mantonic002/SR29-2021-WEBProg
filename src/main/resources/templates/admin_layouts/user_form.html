@@ -8,7 +8,7 @@
 </head>
 <body>
     <div style="width: 60rem; margin: 0px auto;">
-        <div th:replace="~{layouts/commonHeader :: header}">...</div>
+        <div th:replace="~{layouts/admin_header :: header}">...</div>
         <div>
             <h4>[[${pageTitle}]]</h4>
         </div>
@@ -54,7 +54,7 @@
 
 
             <button type="submit" class="btn btn-secondary btn-sm">Save</button>
-            <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
+            <a th:href="${redirect}" class="btn btn-secondary btn-sm">Cancel</a>
         </form>
     </div>
 <script type="text/javascript">

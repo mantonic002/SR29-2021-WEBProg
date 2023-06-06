@@ -2,6 +2,7 @@ package com.sr29_2021.Controller;
 
 import com.sr29_2021.Exceptions.UserNotFoundException;
 import com.sr29_2021.Model.User;
+import com.sr29_2021.Model.UserRole;
 import com.sr29_2021.Service.UserService;
 import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLogin() {
-        return "index";
+        return "login";
     }
 
     @PostMapping("/login/save")
@@ -52,11 +53,32 @@ public class LoginController {
             }
 
             setLoggedInUser(sessionID, user.getEmail());
-            return "redirect:/news";
-        } else {
-            model.addAttribute("error", "Pogrešan email ili lozinka.");
-            return "index";
+            if(user.getRole().equals(UserRole.ADMIN)){
+                return "redirect:/news";
+            } else if(user.getRole().equals(UserRole.STAFF)){
+                return "redirect:/staff/vax";
+            } else if(user.getRole().equals(UserRole.PATIENT)){
+                return "redirect:/";
+            }
+
         }
+        model.addAttribute("error", "Pogrešan email ili lozinka.");
+        return "index";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletResponse response, @CookieValue(value = "sessionID") String sessionID) {
+        // Remove the session from loggedInUsers map
+        loggedInUsers.remove(sessionID);
+
+        // Clear the session cookie
+        Cookie sessionCookie = new Cookie("sessionID", null);
+        sessionCookie.setMaxAge(0);
+        sessionCookie.setPath("/");
+        response.addCookie(sessionCookie);
+
+        // Redirect to the login page or any other desired page
+        return "redirect:/login";
     }
 
     private boolean isUserLoggedIn(String email) {

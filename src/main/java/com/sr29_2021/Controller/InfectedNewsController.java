@@ -1,9 +1,7 @@
 package com.sr29_2021.Controller;
 
 import com.sr29_2021.Model.InfectedNews;
-import com.sr29_2021.Model.News;
 import com.sr29_2021.Service.InfectedNewsService;
-import com.sr29_2021.Service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,14 +23,14 @@ public class InfectedNewsController {
         List<InfectedNews> list = service.listAll();
         model.addAttribute("news", new InfectedNews());
         model.addAttribute("listNews", list);
-        return "infected_news";
+        return "admin_layouts/infected_news";
     }
 
     @GetMapping("/infectedNews/new")
     public String showNewForm(Model model){
         model.addAttribute("news", new InfectedNews());
         model.addAttribute("pageTitle", "Add news");
-        return "infected_news_form";
+        return "admin_layouts/infected_news_form";
     }
 
     @PostMapping("/infectedNews/save")
@@ -48,7 +46,7 @@ public class InfectedNewsController {
         model.addAttribute("news", news);
         model.addAttribute("pageTitle",
                 "Edit news (name:" + news.getId() + ")");
-        return "infected_news_form";
+        return "admin_layouts/infected_news_form";
     }
 
     @GetMapping("/infectedNews/delete/{id}")

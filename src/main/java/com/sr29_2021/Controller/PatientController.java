@@ -31,7 +31,7 @@ public class PatientController {
 
         Cookie[] cookies = request.getCookies();
         if(userService.checkCookies(cookies, UserRole.ADMIN)){
-            return "patients";
+            return "admin_layouts/patients";
         }
         return "access_denied";
     }
@@ -49,7 +49,7 @@ public class PatientController {
         model.addAttribute("patient", patient);
         model.addAttribute("pageTitle",
                 "Edit patient (name:" + patient.getUser().getFirstName() + ")");
-        return "patient_form";
+        return "admin_layouts/patient_form";
     }
 
     @GetMapping("/patients/delete/{id}")

@@ -23,14 +23,14 @@ public class NewsController {
         List<News> list = service.listAll();
         model.addAttribute("news", new News());
         model.addAttribute("listNews", list);
-        return "news";
+        return "admin_layouts/news";
     }
 
     @GetMapping("/news/new")
     public String showNewForm(Model model){
         model.addAttribute("news", new News());
         model.addAttribute("pageTitle", "Add news");
-        return "news_form";
+        return "admin_layouts/news_form";
     }
 
     @PostMapping("/news/save")
@@ -46,7 +46,7 @@ public class NewsController {
         model.addAttribute("news", news);
         model.addAttribute("pageTitle",
                 "Edit news (name:" + news.getName() + ")");
-        return "news_form";
+        return "admin_layouts/news_form";
     }
 
     @GetMapping("/news/delete/{id}")

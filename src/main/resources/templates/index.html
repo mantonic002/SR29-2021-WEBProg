@@ -7,26 +7,35 @@
 
 </head>
 <body>
-    <div th:replace="~{layouts/commonHeader :: header}">...</div>
+<div th:if="${role == 'admin'}" th:insert="~{layouts/admin_header :: header}"></div>
+<div th:if="${role == 'staff'}" th:insert="~{layouts/staff_header :: header}"></div>
+<div th:if="${role == 'none'}" th:insert="~{layouts/not_logged_header :: header}"></div>
+<div th:if="${role == 'patient'}" th:insert="~{layouts/patient_header :: header}"></div>
 
-<!--    <h2><a th:href="@{/users}">Manage users</a></h2>
-    <h2><a th:href="@{/manufacturers}">Manage manufacturers</a></h2>
-    <h2><a th:href="@{/vaxes}">Manage vaxes</a></h2>
-    <h2><a th:href="@{/patients}">Manage patients</a></h2>
-    <h2><a th:href="@{/news}">Manage news</a></h2>
-    <h2><a th:href="@{/infectedNews}">Manage infected news</a></h2>-->
+    <th:block th:each="news : ${infectedToday}">
+        <div class="card" style="width: 60rem; margin: 10px auto;">
+            <div class="card-body">
+                <h5 class="card-title">Infected news:</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">[[${news.dateTime}]]</h6>
+                <p class="card-text">
+                    Number of tested patients:          [[${news.tested}]]<br/>
+                    Number of infected patients:        [[${news.infected}]]<br/>
+                    Number of hospitalized patients:    [[${news.hospitalized}]]<br/>
+                    Number of patients on respirators:  [[${news.onRespirator}]]<br/>
+                    Infected all time:                  [[${news.infectedAllTime}]]
+                </p>
+            </div>
+        </div>
+    </th:block>
 
-    <form th:action="@{/login/save}" method="post" style="width: 40vw; margin: auto;">
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+    <th:block th:each="news : ${listNews}">
+        <div class="card" style="width: 80rem; margin: 0 auto;">
+            <div class="card-body">
+                <h5 class="card-title">[[${news.name}]]</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">[[${news.dateTime}]]</h6>
+                <p class="card-text">[[${news.content}]]</p>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <a href="" th:href="@{'/user/new'}" class="btn btn-primary btn-lg " style=" margin-left: 30vw; margin-top: 10px;" role="button"  >Sign-up</a>
+    </th:block>
 </body>
 </html>
