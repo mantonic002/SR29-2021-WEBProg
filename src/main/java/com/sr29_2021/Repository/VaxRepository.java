@@ -146,12 +146,13 @@ public class VaxRepository implements IVaxRepository {
         String sql =
                 "SELECT v.id, v.name, v.available_num, v.manufacturer_id " +
                         "FROM vax v " +
-                        "WHERE v.name LIKE ? OR v.available_num LIKE ? OR v.manufacturer_id LIKE ? " +
+                        "JOIN manufacturers m ON v.manufacturer_id = m.id " +
+                        "WHERE v.name LIKE ? OR v.available_num LIKE ? OR m.name LIKE ? OR m.country LIKE ? " +
                         "ORDER BY v.id";
 
         VaxRowCallbackHandler rowCallbackHandler = new VaxRowCallbackHandler();
         String likeQuery = "%" + query + "%";
-        jdbcTemplate.query(sql, rowCallbackHandler, likeQuery, likeQuery, likeQuery);
+        jdbcTemplate.query(sql, rowCallbackHandler, likeQuery, likeQuery, likeQuery, likeQuery);
 
         return rowCallbackHandler.getVaxes();
     }

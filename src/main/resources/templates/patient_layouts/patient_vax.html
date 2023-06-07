@@ -6,27 +6,15 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div th:replace="~{layouts/staff_header :: header}">...</div>
+<div th:replace="~{layouts/patient_header :: header}">...</div>
 
 <div style="width: 80rem; margin: 20px auto;">
 
   <table class="table">
     <thead>
     <tr>
-      <th>
-        <a th:href="@{/staff/vax(order='id', orderBy=${newOrderBy})}" style="text-decoration: none;">
-          Id ▼▲
-        </a>
-      </th>
-      <th>
-        <a th:href="@{/staff/vax(order='name', orderBy=${newOrderBy})}" style="text-decoration: none;">
-          Name ▼▲
-        </a>
-      </th>
-
-
-<!--      <th scope="col">Id</th>-->
-<!--      <th scope="col">Name</th>-->
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
       <th scope="col">Amount left</th>
       <th scope="col">Manufacturer Name</th>
       <th scope="col">Manufacturer Country</th>
@@ -36,15 +24,15 @@
     <th:block th:each="vax : ${listVaxes}">
       <tr>
         <td>[[${vax.id}]]</td>
-        <td><a th:href="@{'/vaxes/show/' + ${vax.id}}" class="btn btn-secondary btn-sm">[[${vax.name}]]</a></td>
+        <td>[[${vax.name}]]</td>
         <td>[[${vax.availableNum}]]</td>
         <td>[[${vax.manufacturer.name}]]</td>
         <td>[[${vax.manufacturer.country}]]</td>
       </tr>
-
     </th:block>
     </tbody>
   </table>
+
 </div>
 </body>
 </html>

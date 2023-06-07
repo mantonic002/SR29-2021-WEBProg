@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,30 +45,6 @@ public class VaxController {
         return "access_denied";
     }
 
-    @GetMapping("/staff/vax")
-    public String showVaxStaff(Model model,
-                               HttpServletRequest request ,
-                               @RequestParam(name="order", required = false) String order,
-                               @RequestParam(name = "orderBy", required = false) String orderBy) throws UserNotFoundException {
-
-        if(order == null) {
-            order = "id";
-        }
-        if(orderBy == null) {
-            orderBy = "asc";
-        }
-        System. out. println(order + orderBy);
-        List<Vax> list = service.findSortedVaxes(order, orderBy);
-        // Add the necessary attributes to the model
-        model.addAttribute("listVaxes", list);
-        model.addAttribute("newOrderBy", orderBy.equals("asc") ? "desc" : "asc");
-
-        Cookie[] cookies = request.getCookies();
-        if(userService.checkCookies(cookies, UserRole.STAFF)){
-            return "staff_layouts/staff_vaccine";
-        }
-        return "access_denied";
-    }
 
     @GetMapping("/vaxes/new")
     public String showNewForm(Model model, HttpServletRequest request) throws UserNotFoundException {
@@ -117,6 +94,55 @@ public class VaxController {
         Cookie[] cookies = request.getCookies();
         if(userService.checkCookies(cookies, UserRole.ADMIN)){
             return "redirect:/vaxes";
+        }
+        return "access_denied";
+    }
+
+
+    @GetMapping("/staff/vax")
+    public String showVaxStaff(Model model,
+                               HttpServletRequest request ,
+                               @RequestParam(name = "query", required = false) String query,
+                               @RequestParam(name="order", required = false) String order,
+                               @RequestParam(name = "orderBy", required = false) String orderBy) throws UserNotFoundException {
+
+        if(order == null) {
+            order = "id";
+        }
+        if(orderBy == null) {
+            orderBy = "asc";
+        }
+        List<Vax> list;
+        if (query != null && !query.isEmpty()) {
+            list = service.searchVaxes(query);
+        } else {
+            list = service.findSortedVaxes(order, orderBy);
+        }
+
+        model.addAttribute("listVaxes", list);
+        model.addAttribute("newOrderBy", orderBy.equals("asc") ? "desc" : "asc");
+
+        Cookie[] cookies = request.getCookies();
+        if(userService.checkCookies(cookies, UserRole.STAFF)){
+            return "staff_layouts/staff_vax";
+        }
+        return "access_denied";
+    }
+
+    @GetMapping("patient/vax")
+    public String showVaxPatient(Model model, HttpServletRequest request) throws UserNotFoundException {
+        List<Vax> vaxes = service.listAll();
+        List<Vax> list = new ArrayList<>();
+        for (Vax vax: vaxes) {
+            if(vax.getAvailableNum()>0){
+                list.add(vax);
+            }
+        }
+        model.addAttribute("listVaxes", list);
+
+        Cookie[] cookies = request.getCookies();
+        if(userService.checkCookies(cookies, UserRole.PATIENT)){
+            return "patient_layouts/patient_vax";
         }
         return "access_denied";
     }

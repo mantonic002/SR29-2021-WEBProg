@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Vaxes</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div th:replace="~{layouts/staff_header :: header}">...</div>
+
+<div style="width: 80rem; margin: 20px auto;">
+
+<!--  <form th:action="@{/staff/vax}" method="get">-->
+<!--    <input type="text" name="query" placeholder="Search" />-->
+<!--    <button type="submit" class="btn btn-secondary btn-sm">Search</button>-->
+<!--  </form>-->
+
+  <form th:action="@{/staff/vax}" method="get" class="search-form">
+    <div class="input-group">
+      <input type="text" name="query" placeholder="Search" class="form-control" />
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-secondary">
+          search
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>
+        <a th:href="@{/staff/vax(order='id', orderBy=${newOrderBy})}" style="text-decoration: none; color: #1a1d20">
+          Id ▼▲
+        </a>
+      </th>
+
+      <th>
+        <a th:href="@{/staff/vax(order='name', orderBy=${newOrderBy})}" style="text-decoration: none; color: #1a1d20">
+          Name ▼▲
+        </a>
+      </th>
+
+      <th>
+        <a th:href="@{/staff/vax(order='available_num', orderBy=${newOrderBy})}" style="text-decoration: none; color: #1a1d20">
+          Available ▼▲
+        </a>
+      </th>
+      <th scope="col">Manufacturer Name</th>
+      <th scope="col">Manufacturer Country</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="vax : ${listVaxes}">
+      <tr>
+        <td>[[${vax.id}]]</td>
+        <td><a th:href="@{'/vaxes/show/' + ${vax.id}}" style="color: #1a1d20">[[${vax.name}]]</a></td>
+        <td>[[${vax.availableNum}]]</td>
+        <td>[[${vax.manufacturer.name}]]</td>
+        <td>[[${vax.manufacturer.country}]]</td>
+      </tr>
+
+    </th:block>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
