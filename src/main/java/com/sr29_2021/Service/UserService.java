@@ -55,4 +55,16 @@ public class UserService {
         }
         return false;
     }
+
+    public User checkCookieUser(Cookie[] cookies) throws UserNotFoundException {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getValue().contains("@")){
+                    User temp = this.get(cookie.getValue());
+                    return temp;
+                }
+            }
+        }
+        return null;
+    }
 }

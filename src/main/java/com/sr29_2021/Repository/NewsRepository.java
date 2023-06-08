@@ -37,7 +37,7 @@ public class NewsRepository implements INewsRepository {
 
             News news = NewsMap.get(id);
             if (news == null) {
-                news = new News(id, name, content, dateTime);
+                news = new News(id, name, content, dateTime.minusHours(2));
                 NewsMap.put(news.getId(), news); // dodavanje u kolekciju
             }
         }

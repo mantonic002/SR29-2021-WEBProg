@@ -40,7 +40,7 @@ public class PatientRepository implements IPatientRepository {
             Timestamp lastDose = resultSet.getTimestamp(index++);
             LocalDateTime lastDoseTime = null;
             if(lastDose!=null){
-                lastDoseTime = lastDose.toLocalDateTime();
+                lastDoseTime = lastDose.toLocalDateTime().minusHours(2);
             }
             User user = userRepo.findOne(id);
 

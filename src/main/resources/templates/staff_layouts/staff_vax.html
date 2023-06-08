@@ -10,18 +10,12 @@
 
 <div style="width: 80rem; margin: 20px auto;">
 
-<!--  <form th:action="@{/staff/vax}" method="get">-->
-<!--    <input type="text" name="query" placeholder="Search" />-->
-<!--    <button type="submit" class="btn btn-secondary btn-sm">Search</button>-->
-<!--  </form>-->
-
   <form th:action="@{/staff/vax}" method="get" class="search-form">
     <div class="input-group">
       <input type="text" name="query" placeholder="Search" class="form-control" />
       <div class="input-group-append">
         <button type="submit" class="btn btn-secondary">
           search
-          <i class="fas fa-search"></i>
         </button>
       </div>
     </div>

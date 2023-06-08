@@ -1,12 +1,13 @@
 package com.sr29_2021.Model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class BuyRequest {
     private Integer id;
     private Integer amount;
     private String reason;
-    private LocalDate date;
+    private LocalDateTime date;
     private String status;
     private String denialComment;
     private Integer staffId;
@@ -17,7 +18,7 @@ public class BuyRequest {
     public BuyRequest(Integer id,
                       Integer amount,
                       String reason,
-                      LocalDate date,
+                      LocalDateTime date,
                       String status,
                       String denialComment,
                       User user,
@@ -33,7 +34,7 @@ public class BuyRequest {
     }
 
     public BuyRequest() {
-        this.date = LocalDate.now();
+        this.date = LocalDateTime.now();
     }
 
     public Integer getId() {
@@ -60,11 +61,11 @@ public class BuyRequest {
         this.reason = reason;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

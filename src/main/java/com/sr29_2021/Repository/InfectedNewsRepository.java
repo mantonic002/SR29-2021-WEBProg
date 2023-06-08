@@ -40,7 +40,7 @@ public class InfectedNewsRepository implements IInfectedNewsRepository {
 
             InfectedNews news = NewsMap.get(id);
             if (news == null) {
-                news = new InfectedNews(id, infected, tested, hospitalized, onRespirator, infectedAllTime, dateTime);
+                news = new InfectedNews(id, infected, tested, hospitalized, onRespirator, infectedAllTime, dateTime.minusHours(2));
                 NewsMap.put(news.getId(), news); // dodavanje u kolekciju
             }
         }

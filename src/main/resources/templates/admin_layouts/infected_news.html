@@ -37,7 +37,7 @@
     </div>
 
     <button type="submit" class="btn btn-secondary btn-sm" >Submit</button>
-    <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
+    <button type="button" onclick="" class="btn btn-secondary btn-sm">Cancel</button>
 </form>
 
 <div class="d-flex flex-row flex-wrap justify-content-center">
@@ -45,7 +45,7 @@
         <div class="card m-2" style="width: 20rem;">
             <div class="card-body">
                 <h5 class="card-title">Infected news:</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">[[${news.dateTime}]]</h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary" th:text="${#temporals.format(news.dateTime, 'dd.MM.yyyy HH:mm:ss')}"></h6>
                 <p class="card-text">
                     Number of tested patients:          [[${news.tested}]]<br/>
                     Number of infected patients:        [[${news.infected}]]<br/>

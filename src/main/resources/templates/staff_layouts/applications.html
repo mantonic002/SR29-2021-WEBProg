@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Vaxes</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/popup.css}">
+</head>
+<body>
+<div th:replace="~{layouts/staff_header :: header}">...</div>
+
+<div style="width: 80rem; margin: 20px auto;">
+
+    <div class="popup" th:if="${message}" onclick="popoff()">
+        <span class="popuptext show" id="myPopup" th:text="${message}"></span>
+    </div>
+
+    <form th:action="@{/applications}" method="get" class="search-form">
+        <div class="input-group">
+            <input type="text" name="query" placeholder="Search" class="form-control" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-secondary">
+                    search
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Date and time</th>
+            <th scope="col">Patient name</th>
+            <th scope="col">Patient last name</th>
+            <th scope="col">Patient JMBG</th>
+            <th scope="col">Vax name</th>
+            <th scope="col">Vax manufacturer</th>
+            <th scope="col">Confirm vaccination</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="applicationn : ${listApplications}">
+            <tr>
+                <td>[[${applicationn.id}]]</td>
+                <td th:text="${#temporals.format(applicationn.dateTime, 'dd.MM.yyyy HH:mm:ss')}"></td>
+                <td>[[${applicationn.patient.user.firstName}]]</td>
+                <td>[[${applicationn.patient.user.lastName}]]</td>
+                <td>[[${applicationn.patient.user.jmbg}]]</td>
+                <td>[[${applicationn.vax.name}]]</td>
+                <td>[[${applicationn.vax.manufacturer.name}]]</td>
+                <td>
+                    <form th:action="@{/application/confirm}" method="post">
+                        <input type="hidden" name="applicationId" th:value="${applicationn.id}" />
+                        <button type="submit" class="btn btn-secondary btn-sm">Confirm</button>
+                    </form>
+                </td>
+
+            </tr>
+
+        </th:block>
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+
+    function popoff() {
+        let popup = document.getElementById("myPopup");
+        popup.classList.remove("show");
+    }
+</script>
+</body>
+</html>

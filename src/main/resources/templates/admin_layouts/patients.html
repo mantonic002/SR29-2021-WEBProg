@@ -27,7 +27,7 @@
                 <td>[[${patient.user.lastName}]]</td>
                 <td>[[${patient.vaxxed}]]</td>
                 <td>[[${patient.receivedDoses}]]</td>
-                <td th:unless="${patient.lastDoseDate == null}">[[${patient.lastDoseDate}]]</td>
+                <td th:unless="${patient.lastDoseDate == null}" th:text="${#temporals.format(patient.lastDoseDate, 'dd.MM.yyyy HH:mm:ss')}"></td>
                 <td th:if="${patient.lastDoseDate == null}">not vaccinated</td>
                 <td>
                     <a th:href="@{'/patients/edit/' + ${patient.userId}}" class="btn btn-secondary btn-sm">Edit</a>

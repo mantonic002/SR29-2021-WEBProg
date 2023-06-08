@@ -47,7 +47,7 @@ public class UserRepository implements IUserRepository {
 
             User user = Users.get(id);
             if (user == null) {
-                user = new User(id, email, firstName, lastName, password, jmbg, address, phoneNum, role, registrationTime, date);
+                user = new User(id, email, firstName, lastName, password, jmbg, address, phoneNum, role, registrationTime.minusHours(2), date);
                 Users.put(user.getId(), user); // dodavanje u kolekciju
             }
         }

@@ -130,7 +130,7 @@ public class VaxController {
     }
 
     @GetMapping("patient/vax")
-    public String showVaxPatient(Model model, HttpServletRequest request) throws UserNotFoundException {
+    public String showVaxPatient(Model model, HttpServletRequest request, RedirectAttributes ra) throws UserNotFoundException {
         List<Vax> vaxes = service.listAll();
         List<Vax> list = new ArrayList<>();
         for (Vax vax: vaxes) {
@@ -139,6 +139,11 @@ public class VaxController {
             }
         }
         model.addAttribute("listVaxes", list);
+
+        if (ra.getFlashAttributes().containsKey("message")) {
+            String message = (String) ra.getFlashAttributes().get("message");
+            model.addAttribute("message", message);
+        }
 
         Cookie[] cookies = request.getCookies();
         if(userService.checkCookies(cookies, UserRole.PATIENT)){

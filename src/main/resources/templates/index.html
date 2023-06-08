@@ -16,7 +16,7 @@
         <div class="card" style="width: 60rem; margin: 10px auto;">
             <div class="card-body">
                 <h5 class="card-title">Infected news:</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">[[${news.dateTime}]]</h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary" th:text="${#temporals.format(news.dateTime, 'dd.MM.yyyy HH:mm:ss')}"></h6>
                 <p class="card-text">
                     Number of tested patients:          [[${news.tested}]]<br/>
                     Number of infected patients:        [[${news.infected}]]<br/>
@@ -32,7 +32,7 @@
         <div class="card" style="width: 80rem; margin: 0 auto;">
             <div class="card-body">
                 <h5 class="card-title">[[${news.name}]]</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">[[${news.dateTime}]]</h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary" th:text="${#temporals.format(news.dateTime, 'dd.MM.yyyy HH:mm:ss')}"></h6>
                 <p class="card-text">[[${news.content}]]</p>
             </div>
         </div>
