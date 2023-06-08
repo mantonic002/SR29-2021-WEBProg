@@ -1,20 +1,20 @@
-/* Popup container */
-/* Popup container */
+
 .popup {
     position: fixed;
     top: 32px;
-    right: 165px;
+    right: 310px;
     display: inline-block;
     cursor: pointer;
 }
 
-/* The actual popup (appears on top) */
 .popup .popuptext {
     visibility: hidden;
-    width: 160px;
-    background-color: lightgreen;
+    width: 300px;
+    height: 100px;
+    background-color: lightgray;
     color: black;
     text-align: center;
+    border: 1px solid black; /* Add black border */
     border-radius: 6px;
     padding: 8px 0;
     position: absolute;
@@ -24,21 +24,27 @@
     margin: 0 auto;
 }
 
-
-/* Toggle this class when clicking on the popup container (hide and show the popup) */
 .popup .show {
     visibility: visible;
     -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s
+    animation: fadeIn 1s;
 }
 
-/* Add animation (fade in the popup) */
+
 @-webkit-keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

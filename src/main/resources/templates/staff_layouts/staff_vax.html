@@ -4,9 +4,14 @@
   <meta charset="UTF-8">
   <title>Manage Vaxes</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/popup.css}">
 </head>
 <body>
 <div th:replace="~{layouts/staff_header :: header}">...</div>
+
+<div class="popup" th:if="${message}" onclick="popoff()">
+  <span class="popuptext show" id="myPopup" th:text="${message}"></span>
+</div>
 
 <div style="width: 80rem; margin: 20px auto;">
 
@@ -54,10 +59,56 @@
         <td>[[${vax.manufacturer.name}]]</td>
         <td>[[${vax.manufacturer.country}]]</td>
       </tr>
-
     </th:block>
     </tbody>
   </table>
+
+  <button id="toggleFormBtn" class="btn btn-secondary" onclick="toggleForm()">
+    <span id="arrowIcon" class="arrow">▼</span> Order vaccines
+  </button>
+
+  <form id="vaxForm" th:action="@{/buyRequest/new}" method="post" th:object="${buyRequest}" style="display: none; border: 1px solid #ccc; padding: 10px;">
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <input type="number" class="form-control" id="amount" th:field="*{amount}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="vax">Vaccine</label>
+      <select th:field="*{vaxId}" class="form-select" style="width: 100%" id="vax">
+        <option th:each="vax : ${listVaxes}" th:value="${vax.getId()}" th:text="${vax.getName()}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Reason</label>
+      <textarea th:field="*{reason}" class="form-control" aria-label="With textarea"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+    <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
+  </form>
 </div>
+<script>
+  function toggleForm() {
+    let form = document.getElementById("vaxForm");
+    let arrowIcon = document.getElementById("arrowIcon");
+
+    if (form.style.display === "none") {
+      form.style.display = "block";
+      arrowIcon.innerHTML = "▲";
+      document.getElementById("toggleFormBtn").innerHTML = '<span class="arrow">▲</span> Order vaccines';
+    } else {
+      form.style.display = "none";
+      arrowIcon.innerHTML = "▼";
+      document.getElementById("toggleFormBtn").innerHTML = '<span class="arrow">▼</span> Order vaccines';
+    }
+  }
+
+  function popoff() {
+    let popup = document.getElementById("myPopup");
+    popup.classList.remove("show");
+  }
+</script>
 </body>
 </html>

@@ -1,9 +1,7 @@
 package com.sr29_2021.Controller;
 
 import com.sr29_2021.Exceptions.UserNotFoundException;
-import com.sr29_2021.Model.Manufacturer;
-import com.sr29_2021.Model.UserRole;
-import com.sr29_2021.Model.Vax;
+import com.sr29_2021.Model.*;
 import com.sr29_2021.Service.ManufacturerService;
 import com.sr29_2021.Service.UserService;
 import com.sr29_2021.Service.VaxService;
@@ -104,7 +102,8 @@ public class VaxController {
                                HttpServletRequest request ,
                                @RequestParam(name = "query", required = false) String query,
                                @RequestParam(name="order", required = false) String order,
-                               @RequestParam(name = "orderBy", required = false) String orderBy) throws UserNotFoundException {
+                               @RequestParam(name = "orderBy", required = false) String orderBy,
+                               RedirectAttributes ra) throws UserNotFoundException {
 
         if(order == null) {
             order = "id";
@@ -121,6 +120,12 @@ public class VaxController {
 
         model.addAttribute("listVaxes", list);
         model.addAttribute("newOrderBy", orderBy.equals("asc") ? "desc" : "asc");
+        model.addAttribute("buyRequest", new BuyRequest());
+
+        if (ra.getFlashAttributes().containsKey("message")) {
+            String message = (String) ra.getFlashAttributes().get("message");
+            model.addAttribute("message", message);
+        }
 
         Cookie[] cookies = request.getCookies();
         if(userService.checkCookies(cookies, UserRole.STAFF)){
