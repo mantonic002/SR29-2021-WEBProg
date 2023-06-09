@@ -14,7 +14,7 @@
             <h4>[[${pageTitle}]]</h4>
         </div>
 
-        <form th:action="@{${method}}" th:method="post" th:object="${user}">
+        <form th:action="@{${method}}" th:method="post" th:object="${user}" onsubmit="return validateForm()">
             <input type="hidden" th:field="*{id}">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
@@ -36,8 +36,14 @@
             </div>
 
             <div class="mb-3">
+                <label for="pw2" class="form-label">Repeat password</label>
+                <input type="password" class="form-control" id="pw2" required minlength="5" maxlength="15" />
+                <span id="pwError" style="color: red; display: none;">Passwords do not match</span>
+            </div>
+
+            <div class="mb-3">
                 <label for="jmbg" class="form-label">JMBG</label>
-                <input type="text" class="form-control" id="jmbg" th:field="*{jmbg}" required minlength="10" maxlength="20" />
+                <input type="text" class="form-control" id="jmbg" th:field="*{jmbg}" required minlength="10" maxlength="15" />
             </div>
 
             <div class="mb-3">
@@ -58,5 +64,20 @@
             <a th:href="${redirect}" class="btn btn-secondary btn-sm">Cancel</a>
         </form>
     </div>
+    <script type="text/javascript">
+        function validateForm() {
+            var password = document.getElementById("pw").value;
+            var repeatPassword = document.getElementById("pw2").value;
+            var pwError = document.getElementById("pwError");
+
+            if (password !== repeatPassword) {
+                pwError.style.display = "block";
+                return false; // Prevent form submission
+            } else {
+                pwError.style.display = "none";
+                return true; // Proceed with form submission
+            }
+        }
+    </script>
 </body>
 </html>

@@ -69,10 +69,14 @@ public class UserController {
     }
 
     @PostMapping ("/users/update")
-    public String updateUser(User user, RedirectAttributes ra) {
+    public String updateUser(User user, RedirectAttributes ra) throws UserNotFoundException {
+        User oldUser = service.get(user.getId());
+        if(user.getPassword().isEmpty() || user.getPassword() == null){
+            user.setPassword(oldUser.getPassword());
+        }
         service.update(user);
         ra.addFlashAttribute("message", "User has been updated");
-        return "redirect:/users";
+        return "redirect:/profile";
     }
 
     @GetMapping("/users/edit/{id}")
@@ -86,7 +90,7 @@ public class UserController {
 
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message", "User couldn't been updated");
-            return "redirect:/users";
+            return "redirect:/profile";
         }
     }
     @GetMapping("users/delete/{id}")
@@ -95,7 +99,27 @@ public class UserController {
         patientService.delete(id);
         ra.addFlashAttribute("message", "User has been deleted");
         return "redirect:/users";
+    }
 
+    @GetMapping("/profile")
+    public String showProfile(Model model, HttpServletRequest request) throws UserNotFoundException {
+
+        Cookie[] cookies = request.getCookies();
+        User user = service.checkCookieUser(cookies);
+        model.addAttribute("user", user);
+        if(user.getRole().equals(UserRole.ADMIN)){
+            model.addAttribute("role", "admin");
+        }
+        else if(user.getRole().equals(UserRole.STAFF)){
+            model.addAttribute("role", "staff");
+        }
+        else if(user.getRole().equals(UserRole.PATIENT)){
+            model.addAttribute("role", "patient");
+        }
+        if(user != null){
+            return "profile";
+        }
+        return "access_denied";
     }
 
 }

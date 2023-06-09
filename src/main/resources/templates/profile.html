@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div th:if="${role == 'admin'}" th:insert="~{layouts/admin_header :: header}"></div>
+<div th:if="${role == 'staff'}" th:insert="~{layouts/staff_header :: header}"></div>
+<div th:if="${role == 'patient'}" th:insert="~{layouts/patient_header :: header}"></div>
+
+<div style="width: 60rem; margin: 20px auto;">
+  <h4>User Profile</h4>
+  <div>
+    <strong>Email:</strong> [[${user.email}]]
+  </div>
+  <div>
+    <strong>First Name:</strong> [[${user.firstName}]]
+  </div>
+  <div>
+    <strong>Last Name:</strong> [[${user.lastName}]]
+  </div>
+  <div>
+    <strong>JMBG:</strong> [[${user.jmbg}]]
+  </div>
+  <div>
+    <strong>Address:</strong> [[${user.address}]]
+  </div>
+  <div>
+    <strong>Phone Number:</strong> [[${user.phoneNum}]]
+  </div>
+  <div>
+    <strong>Role:</strong> [[${user.role}]]
+  </div>
+  <div>
+    <strong>Birth Date:</strong> [[${user.birthDate}]]
+  </div>
+  <div>
+    <strong>Registration Time:</strong> [[${#temporals.format(user.registrationTime, 'dd.MM.yyyy HH:mm:ss')}]]
+  </div>
+  <br>
+  <a th:href="@{'/users/edit/' + ${user.id}}" class="btn btn-secondary btn-sm">EDIT PERSONAL INFORMATION</a>
+
+</div>
+</body>
+</html>
