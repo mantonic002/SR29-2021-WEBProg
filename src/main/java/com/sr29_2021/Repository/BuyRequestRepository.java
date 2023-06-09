@@ -102,7 +102,7 @@ public class BuyRequestRepository implements IBuyRequestRepository {
 
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                String sql = "INSERT INTO buy_request (amount, reason, date_time, status, denial_comment, staff_id, vax_id) VALUES (?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO buy_request (amount, reason, date_time, status, denial_comment, staff_id, vax_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 int index = 1;
@@ -131,8 +131,8 @@ public class BuyRequestRepository implements IBuyRequestRepository {
                 Timestamp.valueOf(buyRequest.getDate()).toString(),
                 buyRequest.getStatus().toString(),
                 buyRequest.getDenialComment(),
-                buyRequest.getUser().getId(),
-                buyRequest.getVax().getId(),
+                buyRequest.getStaffId(),
+                buyRequest.getVaxId(),
                 buyRequest.getId()) == 1;
 
         return success ? 1 : 0;

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -122,4 +123,47 @@ public class BuyRequestController {
 
         return "redirect:/buyRequests";
     }
+
+    @GetMapping("/staff/buyRequests")
+    public String showBuyRequestsStaff(Model model, HttpServletRequest request) throws UserNotFoundException {
+        Cookie[] cookies = request.getCookies();
+        User user = userService.checkCookieUser(cookies);
+        List<BuyRequest> all = service.listAll();
+        List<BuyRequest> list = new ArrayList<>();
+        for (BuyRequest b : all) {
+            if (b.getStaffId() == user.getId()){
+                list.add(b);
+            }
+        }
+        model.addAttribute("list", list);
+
+
+        if(userService.checkCookies(cookies, UserRole.STAFF)){
+            return "staff_layouts/staff_buy_requests";
+        }
+        return "access_denied";
+    }
+
+    @GetMapping("/buyRequest/update/{id}")
+    public String showEditForm(@PathVariable("id") Integer id, Model model){
+        BuyRequest buyRequest = service.get(id);
+        List<Vax> listVaxes = vaxService.listAll();
+        model.addAttribute("buyRequest", buyRequest);
+        model.addAttribute("listVaxes", listVaxes);
+        model.addAttribute("pageTitle",
+                "Update buyRequest");
+        return "staff_layouts/buy_request_update";
+    }
+
+    @PostMapping("/buyRequest/update")
+    public String BuyRequestsUpdate(BuyRequest buyRequest, HttpServletRequest request, RedirectAttributes ra) throws UserNotFoundException {
+
+        buyRequest.setStatus(Status.SENT);
+        service.update(buyRequest);
+
+
+        return "redirect:/staff/buyRequests";
+    }
+
+
 }
