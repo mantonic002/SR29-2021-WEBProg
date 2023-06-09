@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage patients</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"></head>
+<body>
+<div th:replace="~{layouts/admin_header :: header}">...</div>
+<div style="width: 80rem; margin: 20px auto;">
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Reason</th>
+      <th scope="col">Date and Time</th>
+      <th scope="col">Status</th>
+      <th scope="col">Comment</th>
+      <th scope="col">Staff name</th>
+      <th scope="col">Staff last name</th>
+      <th scope="col">Vax name</th>
+      <th scope="col">Vax manufacturer</th>
+      <th scope="col"/>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="request : ${list}">
+      <tr scope="row">
+        <td>[[${request.id}]]</td>
+        <td>[[${request.amount}]]</td>
+        <td>[[${request.reason}]]</td>
+        <td th:text="${#temporals.format(request.date, 'dd.MM.yyyy HH:mm:ss')}"></td>
+        <td>[[${request.status}]]</td>
+        <td>[[${request.denialComment}]]</td>
+        <td>[[${request.user.firstName}]]</td>
+        <td>[[${request.user.lastName}]]</td>
+        <td>[[${request.vax.name}]]</td>
+        <td>[[${request.vax.manufacturer.name}]]</td>
+
+
+        <td>
+          <a th:if="${request.status.name() == 'SENT'}" th:href="@{'/buyRequest/accept/' + ${request.id}}" class="btn btn-secondary btn-sm">Accept</a>
+          <a th:if="${request.status.name() == 'SENT'}" th:href="@{'/buyRequest/comment/' + ${request.id} + '/deny'}" class="btn btn-secondary btn-sm">Deny</a>
+          <a th:if="${request.status.name() == 'SENT'}" th:href="@{'/buyRequest/comment/' + ${request.id} + '/revise'}" class="btn btn-secondary btn-sm">Revision</a>
+        </td>
+      </tr>
+
+    </th:block>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

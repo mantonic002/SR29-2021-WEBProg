@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>[[${pageTitle}]]</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"></head>
+<body>
+<div>
+  <div th:replace="~{layouts/admin_header :: header}">...</div>
+  <div style="width: 60rem; margin: 0px auto;">
+    <h4>[[${pageTitle}]]</h4>
+  </div>
+
+  <form th:action="@{/buyRequest/comment}" method="post" th:object="${buyRequest}"
+        style="width: 60rem; margin: 20px auto;">
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{amount}">
+    <input type="hidden" th:field="*{reason}">
+    <input type="hidden" th:field="*{date}">
+    <input type="hidden" th:field="*{status}">
+    <input type="hidden" th:field="*{staffId}">
+    <input type="hidden" th:field="*{vaxId}">
+
+    <input type="hidden" name="method" th:value="${method}">
+
+    <div class="input-group" style="margin-bottom: 10px">
+      <span class="input-group-text">Comment</span>
+      <textarea th:field="*{denialComment}" class="form-control" aria-label="With textarea"></textarea>
+    </div>
+    <button type="submit" class="btn btn-secondary btn-sm" >Submit</button>
+    <button type="button" onclick="cancelForm()" class="btn btn-secondary btn-sm">Cancel</button>
+  </form>
+
+</div>
+
+<script type="text/javascript">
+  function cancelForm(){
+    window.location = "[[@{/buyRequests}]]"
+  }
+</script>
+
+</body>
+</html>
+
+

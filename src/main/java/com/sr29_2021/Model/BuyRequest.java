@@ -8,6 +8,7 @@ public class BuyRequest {
     private Integer amount;
     private String reason;
     private LocalDateTime date;
+    private Status status;
     private String denialComment;
     private Integer staffId;
     private User user;
@@ -18,6 +19,7 @@ public class BuyRequest {
                       Integer amount,
                       String reason,
                       LocalDateTime date,
+                      Status status,
                       String denialComment,
                       User user,
                       Vax vax) {
@@ -25,9 +27,12 @@ public class BuyRequest {
         this.amount = amount;
         this.reason = reason;
         this.date = date;
+        this.status = status;
         this.denialComment = denialComment;
         this.user = user;
         this.vax = vax;
+        this.staffId = user.getId();
+        this.vaxId = vax.getId();
     }
 
     public BuyRequest() {
@@ -64,6 +69,14 @@ public class BuyRequest {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public String getDenialComment() {

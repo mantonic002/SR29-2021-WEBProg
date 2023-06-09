@@ -44,14 +44,14 @@ public class BuyRequestRepository implements IBuyRequestRepository {
 
             Integer userId = resultSet.getInt(index++);
             Integer vaxId = resultSet.getInt(index++);
-
+            Status status = Status.valueOf(resultSet.getString(index++));
             User user = userRepository.findOne(userId);
             Vax vax = vaxRepo.findOne(vaxId);
 
 
             BuyRequest buyRequest = BuyRequestMap.get(id);
             if (buyRequest == null) {
-                buyRequest = new BuyRequest(id, amount, reason, dateTime.minusHours(2), denialComment, user, vax);
+                buyRequest = new BuyRequest(id, amount, reason, dateTime.minusHours(2), status, denialComment, user, vax);
                 BuyRequestMap.put(buyRequest.getId(), buyRequest); // dodavanje u kolekciju
             }
         }
@@ -102,7 +102,7 @@ public class BuyRequestRepository implements IBuyRequestRepository {
 
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                String sql = "INSERT INTO buy_request (amount, reason, date_time, denial_comment, staff_id, vax_id) VALUES (?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO buy_request (amount, reason, date_time, status, denial_comment, staff_id, vax_id) VALUES (?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 int index = 1;
@@ -110,6 +110,7 @@ public class BuyRequestRepository implements IBuyRequestRepository {
                 preparedStatement.setString(index++, buyRequest.getReason());
                 Timestamp timestamp = Timestamp.valueOf(buyRequest.getDate());
                 preparedStatement.setString(index++, timestamp.toString());
+                preparedStatement.setString(index++, buyRequest.getStatus().toString());
                 preparedStatement.setString(index++, buyRequest.getDenialComment());
                 preparedStatement.setInt(index++, buyRequest.getStaffId());
                 preparedStatement.setInt(index++, buyRequest.getVaxId());
@@ -123,14 +124,15 @@ public class BuyRequestRepository implements IBuyRequestRepository {
     @Transactional
     @Override
     public int update(BuyRequest buyRequest) {
-        String sql = "UPDATE buy_request SET amount = ?, reason = ?, date_time = ?, denial_comment = ?, staff_id = ?, vax_id = ? WHERE id = ?";
+        String sql = "UPDATE buy_request SET amount = ?, reason = ?, date_time = ?, status = ?, denial_comment = ?, staff_id = ?, vax_id = ? WHERE id = ?";
         boolean success = jdbcTemplate.update(sql,
                 buyRequest.getAmount(),
                 buyRequest.getReason(),
                 Timestamp.valueOf(buyRequest.getDate()).toString(),
+                buyRequest.getStatus().toString(),
                 buyRequest.getDenialComment(),
-                buyRequest.getStaffId(),
-                buyRequest.getVaxId(),
+                buyRequest.getUser().getId(),
+                buyRequest.getVax().getId(),
                 buyRequest.getId()) == 1;
 
         return success ? 1 : 0;
