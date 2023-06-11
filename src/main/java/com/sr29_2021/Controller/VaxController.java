@@ -157,4 +157,14 @@ public class VaxController {
         return "access_denied";
     }
 
+    @GetMapping("/vaxes/show/{id}")
+    public String showVax(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
+        Vax Vax = service.get(id);
+        model.addAttribute("vax", Vax);
+        model.addAttribute("pageTitle",
+                "Vaccine:" + Vax.getName() + ", manufacturer:" + Vax.getManufacturer().getName());
+
+        return "staff_layouts/vax_show";
+    }
+
 }

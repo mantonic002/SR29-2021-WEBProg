@@ -74,6 +74,7 @@ public class UserController {
         if(user.getPassword().isEmpty() || user.getPassword() == null){
             user.setPassword(oldUser.getPassword());
         }
+        user.setRole(oldUser.getRole());
         service.update(user);
         ra.addFlashAttribute("message", "User has been updated");
         return "redirect:/profile";

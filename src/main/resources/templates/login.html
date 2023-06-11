@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Welcome to my app</title>
+  <title>Login</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 
 </head>
@@ -18,8 +18,8 @@
     <label for="exampleInputPassword1">Password</label>
     <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-secondary btn-sm" style="margin-top: 10px">Submit</button>
 </form>
-<a href="" th:href="@{'/users/registration'}" style="margin-left: 30vw; margin-top: 10px;" role="button"  >Sign-up</a>
+<a href="" th:href="@{'/users/registration'}" style="margin-left: 30vw; margin-top: 10px; color: #1a1d20;" role="button"  >Sign-up</a>
 </body>
 </html>

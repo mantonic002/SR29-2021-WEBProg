@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>[[${pageTitle}]]</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+
+<div th:insert="~{layouts/staff_header :: header}"></div>
+
+
+<div style="width: 60rem; margin: 20px auto;">
+  <h4>[[${pageTitle}]]</h4>
+
+
+  <div>
+    <strong>Name:</strong> [[${vax.name}]]
+  </div>
+  <div>
+    <strong>Available:</strong> [[${vax.availableNum}]]
+  </div>
+  <div>
+    <strong>Manufacturer name:</strong> [[${vax.manufacturer.name}]]
+  </div>
+  <div>
+    <strong>Manufacturer country:</strong> [[${vax.manufacturer.country}]]
+  </div>
+
+</div>
+</body>
+</html>
