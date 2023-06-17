@@ -4,7 +4,6 @@ import com.sr29_2021.Model.Manufacturer;
 import com.sr29_2021.Model.Vax;
 import com.sr29_2021.Repository.Interfaces.IManufacturerRepository;
 import com.sr29_2021.Repository.Interfaces.IVaxRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
@@ -21,14 +20,17 @@ import java.util.Map;
 @Repository
 public class VaxRepository implements IVaxRepository {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private IManufacturerRepository manRepo;
+    private final JdbcTemplate jdbcTemplate;
+    private final IManufacturerRepository manRepo;
+
+    public VaxRepository(JdbcTemplate jdbcTemplate, IManufacturerRepository manRepo) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.manRepo = manRepo;
+    }
 
     private class VaxRowCallbackHandler implements RowCallbackHandler {
 
-        private Map<Integer, Vax> Vaxes = new LinkedHashMap<>();
+        private final Map<Integer, Vax> Vaxes = new LinkedHashMap<>();
 
         @Override
         public void processRow(ResultSet resultSet) throws SQLException {

@@ -22,14 +22,17 @@ import java.util.Map;
 @Repository
 public class PatientRepository implements IPatientRepository {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private IUserRepository userRepo;
+    private final JdbcTemplate jdbcTemplate;
+    private final IUserRepository userRepo;
+
+    public PatientRepository(JdbcTemplate jdbcTemplate, IUserRepository userRepo) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.userRepo = userRepo;
+    }
 
     private class PatientRowCallbackHandler implements RowCallbackHandler {
 
-        private Map<Integer, Patient> Patients = new LinkedHashMap<>();
+        private final Map<Integer, Patient> Patients = new LinkedHashMap<>();
 
         @Override
         public void processRow(ResultSet resultSet) throws SQLException {

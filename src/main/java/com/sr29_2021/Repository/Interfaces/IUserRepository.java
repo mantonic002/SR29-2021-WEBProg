@@ -6,18 +6,18 @@ import com.sr29_2021.Model.User;
 import java.util.List;
 
 public interface IUserRepository {
-    public User findOne(Integer id);
+    User findOne(Integer id);
 
-    public User findOne(String email);
+    User findOne(String email);
 
-    public User findOne(String email, String sifra);
+    User findOne(String email, String password);
 
-    public List<User> findAll();
+    List<User> findAll();
 
-    public int save(User user);
+    int save(User user);
 
-    public int update(User user);
+    int update(User user);
 
-    public int delete(Integer id);
+    int delete(Integer id);
 
 }

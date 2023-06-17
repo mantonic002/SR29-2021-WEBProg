@@ -21,13 +21,16 @@ import java.util.Map;
 
 @Repository
 public class UserRepository implements IUserRepository {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+
+    public UserRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
 
-    private class UserRowCallBackHandler implements RowCallbackHandler {
+    private static class UserRowCallBackHandler implements RowCallbackHandler {
 
-        private Map<Integer, User> Users = new LinkedHashMap<>();
+        private final Map<Integer, User> Users = new LinkedHashMap<>();
 
         @Override
         public void processRow(ResultSet resultSet) throws SQLException {
@@ -48,7 +51,7 @@ public class UserRepository implements IUserRepository {
             User user = Users.get(id);
             if (user == null) {
                 user = new User(id, email, firstName, lastName, password, jmbg, address, phoneNum, role, registrationTime.minusHours(2), date);
-                Users.put(user.getId(), user); // dodavanje u kolekciju
+                Users.put(user.getId(), user);
             }
         }
 

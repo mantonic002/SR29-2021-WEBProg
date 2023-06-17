@@ -7,7 +7,6 @@ import com.sr29_2021.Service.ManufacturerService;
 import com.sr29_2021.Service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +19,14 @@ import java.util.List;
 @Controller
 public class ManufacturerController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private ManufacturerService service;
+    private final ManufacturerService service;
+
+    public ManufacturerController(UserService userService, ManufacturerService service) {
+        this.userService = userService;
+        this.service = service;
+    }
 
     @GetMapping("/manufacturers")
     public String showManufacturerList(Model model , HttpServletRequest request) throws UserNotFoundException {

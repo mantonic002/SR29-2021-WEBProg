@@ -20,12 +20,15 @@ import java.util.Map;
 @Repository
 public class NewsRepository implements INewsRepository {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    private class NewsRowCallBackHandler implements RowCallbackHandler {
+    public NewsRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-        private Map<Integer, News> NewsMap = new LinkedHashMap<>();
+    private static class NewsRowCallBackHandler implements RowCallbackHandler {
+
+        private final Map<Integer, News> NewsMap = new LinkedHashMap<>();
 
         @Override
         public void processRow(ResultSet resultSet) throws SQLException {
@@ -38,7 +41,7 @@ public class NewsRepository implements INewsRepository {
             News news = NewsMap.get(id);
             if (news == null) {
                 news = new News(id, name, content, dateTime.minusHours(2));
-                NewsMap.put(news.getId(), news); // dodavanje u kolekciju
+                NewsMap.put(news.getId(), news);
             }
         }
 
@@ -56,7 +59,7 @@ public class NewsRepository implements INewsRepository {
                         "WHERE n.id = ? " +
                         "ORDER BY n.id";
 
-        NewsRepository.NewsRowCallBackHandler rowCallbackHandler = new NewsRepository.NewsRowCallBackHandler();
+        NewsRepository.NewsRowCallBackHandler rowCallbackHandler = new NewsRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallbackHandler, id);
 
         if (rowCallbackHandler.getNews().size() == 0) {
@@ -72,7 +75,7 @@ public class NewsRepository implements INewsRepository {
                         "FROM news n " +
                         "ORDER BY n.id";
 
-        NewsRepository.NewsRowCallBackHandler rowCallbackHandler = new NewsRepository.NewsRowCallBackHandler();
+        NewsRepository.NewsRowCallBackHandler rowCallbackHandler = new NewsRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallbackHandler);
 
         if (rowCallbackHandler.getNews().size() == 0) {

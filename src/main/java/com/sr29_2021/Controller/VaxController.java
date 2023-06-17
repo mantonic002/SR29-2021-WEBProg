@@ -1,13 +1,15 @@
 package com.sr29_2021.Controller;
 
 import com.sr29_2021.Exceptions.UserNotFoundException;
-import com.sr29_2021.Model.*;
+import com.sr29_2021.Model.BuyRequest;
+import com.sr29_2021.Model.Manufacturer;
+import com.sr29_2021.Model.UserRole;
+import com.sr29_2021.Model.Vax;
 import com.sr29_2021.Service.ManufacturerService;
 import com.sr29_2021.Service.UserService;
 import com.sr29_2021.Service.VaxService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +24,17 @@ import java.util.List;
 @Controller
 public class VaxController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private VaxService service;
+    private final VaxService service;
 
-    @Autowired
-    private ManufacturerService manService;
+    private final ManufacturerService manService;
+
+    public VaxController(UserService userService, VaxService service, ManufacturerService manService) {
+        this.userService = userService;
+        this.service = service;
+        this.manService = manService;
+    }
 
     @GetMapping("/vaxes")
     public String showVaxList(Model model, HttpServletRequest request) throws UserNotFoundException {
@@ -164,7 +169,7 @@ public class VaxController {
     }
 
     @GetMapping("/vaxes/show/{id}")
-    public String showVax(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
+    public String showVax(@PathVariable("id") Integer id, Model model) {
         Vax Vax = service.get(id);
         model.addAttribute("vax", Vax);
         model.addAttribute("pageTitle",

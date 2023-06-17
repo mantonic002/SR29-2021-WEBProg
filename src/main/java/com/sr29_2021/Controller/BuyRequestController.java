@@ -7,7 +7,6 @@ import com.sr29_2021.Service.UserService;
 import com.sr29_2021.Service.VaxService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +21,15 @@ import java.util.List;
 
 @Controller
 public class BuyRequestController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private VaxService vaxService;
-    @Autowired
-    private BuyRequestService service;
+    private final UserService userService;
+    private final VaxService vaxService;
+    private final BuyRequestService service;
+
+    public BuyRequestController(UserService userService, VaxService vaxService, BuyRequestService service) {
+        this.userService = userService;
+        this.vaxService = vaxService;
+        this.service = service;
+    }
 
     @PostMapping("/buyRequest/new")
     public String saveBuyRequest(BuyRequest buyRequest, HttpServletRequest request, RedirectAttributes ra) throws UserNotFoundException {
@@ -131,7 +133,7 @@ public class BuyRequestController {
         List<BuyRequest> all = service.listAll();
         List<BuyRequest> list = new ArrayList<>();
         for (BuyRequest b : all) {
-            if (b.getStaffId() == user.getId()){
+            if (b.getStaffId().equals(user.getId())){
                 list.add(b);
             }
         }
@@ -156,7 +158,7 @@ public class BuyRequestController {
     }
 
     @PostMapping("/buyRequest/update")
-    public String BuyRequestsUpdate(BuyRequest buyRequest, HttpServletRequest request, RedirectAttributes ra) throws UserNotFoundException {
+    public String BuyRequestsUpdate(BuyRequest buyRequest) {
 
         buyRequest.setStatus(Status.SENT);
         service.update(buyRequest);

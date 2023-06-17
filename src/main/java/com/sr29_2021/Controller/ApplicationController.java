@@ -8,10 +8,11 @@ import com.sr29_2021.Service.UserService;
 import com.sr29_2021.Service.VaxService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -19,14 +20,17 @@ import java.util.List;
 
 @Controller
 public class ApplicationController {
-    @Autowired
-    private PatientService patientService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private VaxService vaxService;
-    @Autowired
-    private ApplicationService applicationService;
+    private final PatientService patientService;
+    private final UserService userService;
+    private final VaxService vaxService;
+    private final ApplicationService applicationService;
+
+    public ApplicationController(PatientService patientService, UserService userService, VaxService vaxService, ApplicationService applicationService) {
+        this.patientService = patientService;
+        this.userService = userService;
+        this.vaxService = vaxService;
+        this.applicationService = applicationService;
+    }
 
     @PostMapping("/application/new")
     public String saveApplication(@RequestParam("vaxId") int vaxId, HttpServletRequest request, RedirectAttributes ra) throws UserNotFoundException {
@@ -111,10 +115,10 @@ public class ApplicationController {
                 }
             } else {
                 System.out.println(patient.getLastDoseDate().plusMinutes(1));
-                ra.addFlashAttribute("message", "confirmation faileddd");
+                ra.addFlashAttribute("message", "Patient received a dose recently");
             }
         }else{
-            ra.addFlashAttribute("message", "confirmation failed");
+            ra.addFlashAttribute("message", "Patient already received 4 doses");
         }
         return "redirect:/applications";
     }

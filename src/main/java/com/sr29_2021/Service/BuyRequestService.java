@@ -2,7 +2,6 @@ package com.sr29_2021.Service;
 
 import com.sr29_2021.Model.BuyRequest;
 import com.sr29_2021.Repository.Interfaces.IBuyRequestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,10 +9,13 @@ import java.util.List;
 @Service
 public class BuyRequestService {
 
-    @Autowired
-    private IBuyRequestRepository repo;
+    private final IBuyRequestRepository repo;
 
-    public List<BuyRequest> listAll() { return(List<BuyRequest>) repo.findAll(); }
+    public BuyRequestService(IBuyRequestRepository repo) {
+        this.repo = repo;
+    }
+
+    public List<BuyRequest> listAll() { return repo.findAll(); }
 
     public void save(BuyRequest BuyRequest) {
         repo.save(BuyRequest);
@@ -24,8 +26,7 @@ public class BuyRequestService {
     }
 
     public BuyRequest get(Integer id) {
-        BuyRequest BuyRequest = repo.findOne(id);
-        return BuyRequest;
+        return repo.findOne(id);
     }
 
     public void delete(Integer id) { repo.delete(id); }

@@ -5,7 +5,6 @@ import com.sr29_2021.Model.User;
 import com.sr29_2021.Model.UserRole;
 import com.sr29_2021.Repository.Interfaces.IUserRepository;
 import jakarta.servlet.http.Cookie;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,11 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    private IUserRepository repo;
+    private final IUserRepository repo;
+
+    public UserService(IUserRepository repo) {
+        this.repo = repo;
+    }
 
     public List<User> listAll(){
         return repo.findAll();
@@ -60,8 +62,7 @@ public class UserService {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if(cookie.getValue().contains("@")){
-                    User temp = this.get(cookie.getValue());
-                    return temp;
+                    return this.get(cookie.getValue());
                 }
             }
         }

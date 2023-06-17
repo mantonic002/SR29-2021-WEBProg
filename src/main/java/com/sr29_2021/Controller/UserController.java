@@ -8,7 +8,6 @@ import com.sr29_2021.Service.PatientService;
 import com.sr29_2021.Service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +20,14 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService service;
+    private final UserService service;
 
-    @Autowired
-    private PatientService patientService;
+    private final PatientService patientService;
+
+    public UserController(UserService service, PatientService patientService) {
+        this.service = service;
+        this.patientService = patientService;
+    }
 
     @GetMapping("/users")
     public String showUserList(Model model, HttpServletRequest request) throws UserNotFoundException {
@@ -117,10 +119,7 @@ public class UserController {
         else if(user.getRole().equals(UserRole.PATIENT)){
             model.addAttribute("role", "patient");
         }
-        if(user != null){
-            return "profile";
-        }
-        return "access_denied";
+        return "profile";
     }
 
 }

@@ -6,19 +6,19 @@ import com.sr29_2021.Model.Vax;
 import java.util.List;
 
 public interface IVaxRepository {
-    public Vax findOne(Integer id);
+    Vax findOne(Integer id);
 
-    public List<Vax> findByManufacturer(Manufacturer manufacturer);
+    List<Vax> findByManufacturer(Manufacturer manufacturer);
 
-    public List<Vax> findAll();
+    List<Vax> findAll();
 
-    public int save(Vax vax);
+    int save(Vax vax);
 
-    public int update(Vax vax);
+    int update(Vax vax);
 
-    public int delete(Integer id);
-    public List<Vax> searchVaxes(String query);
-    public List<Vax> findSortedVaxes(String sort, String direction);
+    int delete(Integer id);
+    List<Vax> searchVaxes(String query);
+    List<Vax> findSortedVaxes(String sort, String direction);
 
     List<Vax> searchVaxesByAmountRange(Integer minAmount, Integer maxAmount);
 }

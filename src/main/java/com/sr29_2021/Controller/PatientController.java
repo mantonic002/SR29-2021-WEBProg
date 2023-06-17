@@ -1,12 +1,12 @@
 package com.sr29_2021.Controller;
 
 import com.sr29_2021.Exceptions.UserNotFoundException;
-import com.sr29_2021.Model.*;
+import com.sr29_2021.Model.Patient;
+import com.sr29_2021.Model.UserRole;
 import com.sr29_2021.Service.PatientService;
 import com.sr29_2021.Service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +19,13 @@ import java.util.List;
 @Controller
 public class PatientController {
 
-    @Autowired
-    private PatientService service;
-    @Autowired
-    private UserService userService;
+    private final PatientService service;
+    private final UserService userService;
+
+    public PatientController(PatientService service, UserService userService) {
+        this.service = service;
+        this.userService = userService;
+    }
 
     @GetMapping("/patients")
     public String showPatientList(Model model, HttpServletRequest request) throws UserNotFoundException {

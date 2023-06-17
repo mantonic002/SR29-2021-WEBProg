@@ -2,7 +2,6 @@ package com.sr29_2021.Service;
 
 import com.sr29_2021.Model.InfectedNews;
 import com.sr29_2021.Repository.Interfaces.IInfectedNewsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,10 +11,13 @@ import java.util.List;
 @Service
 public class InfectedNewsService {
 
-    @Autowired
-    private IInfectedNewsRepository repo;
+    private final IInfectedNewsRepository repo;
 
-    public List<InfectedNews> listAll() { return(List<InfectedNews>) repo.findAll(); }
+    public InfectedNewsService(IInfectedNewsRepository repo) {
+        this.repo = repo;
+    }
+
+    public List<InfectedNews> listAll() { return repo.findAll(); }
 
     public void save(InfectedNews infectedNews) {
         if(repo.findOne(infectedNews.getId()) != null){
@@ -26,8 +28,7 @@ public class InfectedNewsService {
     }
 
     public InfectedNews get(Integer id) {
-        InfectedNews infectedNews = repo.findOne(id);
-        return infectedNews;
+        return repo.findOne(id);
     }
 
     public List<InfectedNews> getToday() {

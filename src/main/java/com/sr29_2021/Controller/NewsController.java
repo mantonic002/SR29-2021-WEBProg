@@ -2,7 +2,6 @@ package com.sr29_2021.Controller;
 
 import com.sr29_2021.Model.News;
 import com.sr29_2021.Service.NewsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,11 @@ import java.util.List;
 @Controller
 public class NewsController {
 
-    @Autowired
-    private NewsService service;
+    private final NewsService service;
+
+    public NewsController(NewsService service) {
+        this.service = service;
+    }
 
     @GetMapping("/news")
     public String showNewsList(Model model){
@@ -41,7 +43,7 @@ public class NewsController {
     }
 
     @GetMapping("/news/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+    public String showEditForm(@PathVariable("id") Integer id, Model model){
         News news = service.get(id);
         model.addAttribute("news", news);
         model.addAttribute("pageTitle",

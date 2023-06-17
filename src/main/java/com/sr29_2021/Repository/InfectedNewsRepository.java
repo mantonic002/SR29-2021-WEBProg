@@ -20,12 +20,15 @@ import java.util.Map;
 @Repository
 public class InfectedNewsRepository implements IInfectedNewsRepository {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    private class InfectedNewsRowCallBackHandler implements RowCallbackHandler {
+    public InfectedNewsRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-        private Map<Integer, InfectedNews> NewsMap = new LinkedHashMap<>();
+    private static class InfectedNewsRowCallBackHandler implements RowCallbackHandler {
+
+        private final Map<Integer, InfectedNews> NewsMap = new LinkedHashMap<>();
 
         @Override
         public void processRow(ResultSet resultSet) throws SQLException {
@@ -41,7 +44,7 @@ public class InfectedNewsRepository implements IInfectedNewsRepository {
             InfectedNews news = NewsMap.get(id);
             if (news == null) {
                 news = new InfectedNews(id, infected, tested, hospitalized, onRespirator, infectedAllTime, dateTime.minusHours(2));
-                NewsMap.put(news.getId(), news); // dodavanje u kolekciju
+                NewsMap.put(news.getId(), news);
             }
         }
 
@@ -59,7 +62,7 @@ public class InfectedNewsRepository implements IInfectedNewsRepository {
                         "WHERE n.id = ? " +
                         "ORDER BY n.id";
 
-        InfectedNewsRepository.InfectedNewsRowCallBackHandler rowCallbackHandler = new InfectedNewsRepository.InfectedNewsRowCallBackHandler();
+        InfectedNewsRepository.InfectedNewsRowCallBackHandler rowCallbackHandler = new InfectedNewsRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallbackHandler, id);
 
         if (rowCallbackHandler.getNews().size() == 0) {
@@ -75,7 +78,7 @@ public class InfectedNewsRepository implements IInfectedNewsRepository {
                         "FROM infected_news n " +
                         "ORDER BY n.id";
 
-        InfectedNewsRepository.InfectedNewsRowCallBackHandler rowCallbackHandler = new InfectedNewsRepository.InfectedNewsRowCallBackHandler();
+        InfectedNewsRepository.InfectedNewsRowCallBackHandler rowCallbackHandler = new InfectedNewsRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallbackHandler);
 
         if (rowCallbackHandler.getNews().size() == 0) {

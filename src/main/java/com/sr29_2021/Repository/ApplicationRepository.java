@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -24,16 +23,19 @@ import java.util.Map;
 @Repository
 public class ApplicationRepository implements IApplicationRepository {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private IPatientRepository patientRepo;
-    @Autowired
-    private IVaxRepository vaxRepo;
+    private final JdbcTemplate jdbcTemplate;
+    private final IPatientRepository patientRepo;
+    private final IVaxRepository vaxRepo;
+
+    public ApplicationRepository(JdbcTemplate jdbcTemplate, IPatientRepository patientRepo, IVaxRepository vaxRepo) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.patientRepo = patientRepo;
+        this.vaxRepo = vaxRepo;
+    }
 
     private class ApplicationRowCallBackHandler implements RowCallbackHandler {
 
-        private Map<Integer, Application> ApplicationMap = new LinkedHashMap<>();
+        private final Map<Integer, Application> ApplicationMap = new LinkedHashMap<>();
 
         @Override
         public void processRow(ResultSet resultSet) throws SQLException {
@@ -49,7 +51,7 @@ public class ApplicationRepository implements IApplicationRepository {
             Application application = ApplicationMap.get(id);
             if (application == null) {
                 application = new Application(id, dateTime.minusHours(2), patient, vax);
-                ApplicationMap.put(application.getId(), application); // dodavanje u kolekciju
+                ApplicationMap.put(application.getId(), application);
             }
         }
 
@@ -140,10 +142,10 @@ public class ApplicationRepository implements IApplicationRepository {
 
     @Transactional
     @Override
-    public int deleteByPatient(Integer patientId, Integer id) {
+    public void deleteByPatient(Integer patientId, Integer id) {
         String sql = "DELETE FROM applications WHERE patient_id = ? AND id <> ?";
 
-        return jdbcTemplate.update(sql, patientId, id);
+        jdbcTemplate.update(sql, patientId, id);
     }
 
     @Override

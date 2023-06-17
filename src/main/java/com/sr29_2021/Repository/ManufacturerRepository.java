@@ -18,12 +18,15 @@ import java.util.Map;
 
 @Repository
 public class ManufacturerRepository implements IManufacturerRepository {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    private class ManufacturerRowCallBackHandler implements RowCallbackHandler {
+    public ManufacturerRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-        private Map<Integer, Manufacturer> Manufacturers = new LinkedHashMap<>();
+    private static class ManufacturerRowCallBackHandler implements RowCallbackHandler {
+
+        private final Map<Integer, Manufacturer> Manufacturers = new LinkedHashMap<>();
 
         @Override
         public void processRow(ResultSet resultSet) throws SQLException {
@@ -36,7 +39,7 @@ public class ManufacturerRepository implements IManufacturerRepository {
             Manufacturer manufacturer = Manufacturers.get(id);
             if (manufacturer == null) {
                 manufacturer = new Manufacturer(id, name, country);
-                Manufacturers.put(manufacturer.getId(), manufacturer); // dodavanje u kolekciju
+                Manufacturers.put(manufacturer.getId(), manufacturer);
             }
         }
 

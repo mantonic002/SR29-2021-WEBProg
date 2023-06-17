@@ -2,7 +2,6 @@ package com.sr29_2021.Service;
 
 import com.sr29_2021.Model.Vax;
 import com.sr29_2021.Repository.Interfaces.IVaxRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,10 +9,13 @@ import java.util.List;
 @Service
 public class VaxService {
 
-    @Autowired
-    private IVaxRepository repo;
+    private final IVaxRepository repo;
 
-    public List<Vax> listAll() { return(List<Vax>) repo.findAll(); }
+    public VaxService(IVaxRepository repo) {
+        this.repo = repo;
+    }
+
+    public List<Vax> listAll() { return repo.findAll(); }
 
     public void save(Vax vax) {
         if(repo.findOne(vax.getId()) != null){
@@ -24,8 +26,7 @@ public class VaxService {
     }
 
     public Vax get(Integer id) {
-        Vax vax = repo.findOne(id);
-        return vax;
+        return repo.findOne(id);
     }
 
     public void delete(Integer id) { repo.delete(id); }

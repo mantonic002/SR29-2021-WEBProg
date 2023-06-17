@@ -2,7 +2,6 @@ package com.sr29_2021.Service;
 
 import com.sr29_2021.Model.Patient;
 import com.sr29_2021.Repository.Interfaces.IPatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,10 +9,13 @@ import java.util.List;
 @Service
 public class PatientService {
 
-    @Autowired
-    private IPatientRepository repo;
+    private final IPatientRepository repo;
 
-    public List<Patient> listAll() { return(List<Patient>) repo.findAll(); }
+    public PatientService(IPatientRepository repo) {
+        this.repo = repo;
+    }
+
+    public List<Patient> listAll() { return repo.findAll(); }
 
     public void save(Patient patient) {
         repo.save(patient);
@@ -24,8 +26,7 @@ public class PatientService {
     }
 
     public Patient get(Integer id) {
-        Patient patient = repo.findOne(id);
-        return patient;
+        return repo.findOne(id);
     }
 
     public void delete(Integer id) { repo.delete(id); }

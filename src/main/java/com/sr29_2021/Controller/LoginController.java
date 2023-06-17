@@ -5,16 +5,13 @@ import com.sr29_2021.Model.User;
 import com.sr29_2021.Model.UserRole;
 import com.sr29_2021.Service.UserService;
 import jakarta.servlet.http.Cookie;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import jakarta.servlet.http.HttpServletResponse;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,10 +20,13 @@ import java.util.UUID;
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserService service;
+    private final UserService service;
 
     private final Map<String, String> loggedInUsers = new HashMap<>();
+
+    public LoginController(UserService service) {
+        this.service = service;
+    }
 
     @GetMapping("/login")
     public String showLogin() {
@@ -42,7 +42,7 @@ public class LoginController {
         User user = service.get(email, password);
         if (user != null) {
             if (isUserLoggedIn(user.getEmail())) {
-                model.addAttribute("error", "Korisnik je već ulogovan.");
+                model.addAttribute("error", "User is logged in.");
                 setSessionCookie(response, user.getEmail());
                 return "index";
             }
@@ -62,22 +62,19 @@ public class LoginController {
             }
 
         }
-        model.addAttribute("error", "Pogrešan email ili lozinka.");
+        model.addAttribute("error", "Wrong email or password");
         return "index";
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletResponse response, @CookieValue(value = "sessionID") String sessionID) {
-        // Remove the session from loggedInUsers map
         loggedInUsers.remove(sessionID);
 
-        // Clear the session cookie
         Cookie sessionCookie = new Cookie("sessionID", null);
         sessionCookie.setMaxAge(0);
         sessionCookie.setPath("/");
         response.addCookie(sessionCookie);
 
-        // Redirect to the login page or any other desired page
         return "redirect:/login";
     }
 

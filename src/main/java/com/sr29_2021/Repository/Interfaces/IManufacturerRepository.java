@@ -5,15 +5,15 @@ import com.sr29_2021.Model.Manufacturer;
 import java.util.List;
 
 public interface IManufacturerRepository {
-    public Manufacturer findOne(Integer id);
+    Manufacturer findOne(Integer id);
 
-    public Manufacturer findOne(String name);
+    Manufacturer findOne(String name);
 
-    public List<Manufacturer> findAll();
+    List<Manufacturer> findAll();
 
-    public int save(Manufacturer manufacturer);
+    int save(Manufacturer manufacturer);
 
-    public int update(Manufacturer manufacturer);
+    int update(Manufacturer manufacturer);
 
-    public int delete(Integer id);
+    int delete(Integer id);
 }

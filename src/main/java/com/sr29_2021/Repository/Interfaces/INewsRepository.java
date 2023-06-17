@@ -6,13 +6,13 @@ import com.sr29_2021.Model.News;
 import java.util.List;
 
 public interface INewsRepository {
-    public News findOne(Integer id);
+    News findOne(Integer id);
 
-    public List<News> findAll();
+    List<News> findAll();
 
-    public int save(News news);
+    int save(News news);
 
-    public int update(News news);
+    int update(News news);
 
-    public int delete(Integer id);
+    int delete(Integer id);
 }

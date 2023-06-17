@@ -2,7 +2,6 @@ package com.sr29_2021.Service;
 
 import com.sr29_2021.Model.Application;
 import com.sr29_2021.Repository.Interfaces.IApplicationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,10 +9,13 @@ import java.util.List;
 @Service
 public class ApplicationService {
 
-    @Autowired
-    private IApplicationRepository repo;
+    private final IApplicationRepository repo;
 
-    public List<Application> listAll() { return(List<Application>) repo.findAll(); }
+    public ApplicationService(IApplicationRepository repo) {
+        this.repo = repo;
+    }
+
+    public List<Application> listAll() { return repo.findAll(); }
 
     public void save(Application application) {
         repo.save(application);
@@ -24,8 +26,7 @@ public class ApplicationService {
     }
 
     public Application get(Integer id) {
-        Application application = repo.findOne(id);
-        return application;
+        return repo.findOne(id);
     }
 
     public void delete(Integer id) { repo.delete(id); }

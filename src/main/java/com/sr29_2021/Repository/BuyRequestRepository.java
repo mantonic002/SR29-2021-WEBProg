@@ -20,18 +20,21 @@ import java.util.Map;
 @Repository
 public class BuyRequestRepository implements IBuyRequestRepository {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private IUserRepository userRepository;
+    private final IUserRepository userRepository;
 
-    @Autowired
-    private IVaxRepository vaxRepo;
+    private final IVaxRepository vaxRepo;
+
+    public BuyRequestRepository(JdbcTemplate jdbcTemplate, IUserRepository userRepository, IVaxRepository vaxRepo) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.userRepository = userRepository;
+        this.vaxRepo = vaxRepo;
+    }
 
     private class BuyRequestRowCallBackHandler implements RowCallbackHandler {
 
-        private Map<Integer, BuyRequest> BuyRequestMap = new LinkedHashMap<>();
+        private final Map<Integer, BuyRequest> BuyRequestMap = new LinkedHashMap<>();
 
         @Override
         public void processRow(ResultSet resultSet) throws SQLException {
@@ -52,7 +55,7 @@ public class BuyRequestRepository implements IBuyRequestRepository {
             BuyRequest buyRequest = BuyRequestMap.get(id);
             if (buyRequest == null) {
                 buyRequest = new BuyRequest(id, amount, reason, dateTime.minusHours(2), status, denialComment, user, vax);
-                BuyRequestMap.put(buyRequest.getId(), buyRequest); // dodavanje u kolekciju
+                BuyRequestMap.put(buyRequest.getId(), buyRequest);
             }
         }
 

@@ -9,7 +9,6 @@ import com.sr29_2021.Service.NewsService;
 import com.sr29_2021.Service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,14 +18,17 @@ import java.util.List;
 @Controller
 public class IndexController {
 
-    @Autowired
-    private NewsService service;
+    private final NewsService service;
 
-    @Autowired
-    private InfectedNewsService serviceInfected;
+    private final InfectedNewsService serviceInfected;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public IndexController(NewsService service, InfectedNewsService serviceInfected, UserService userService) {
+        this.service = service;
+        this.serviceInfected = serviceInfected;
+        this.userService = userService;
+    }
 
 
     @GetMapping("/")
