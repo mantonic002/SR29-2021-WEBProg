@@ -99,21 +99,26 @@ public class VaxController {
 
     @GetMapping("/staff/vax")
     public String showVaxStaff(Model model,
-                               HttpServletRequest request ,
+                               HttpServletRequest request,
                                @RequestParam(name = "query", required = false) String query,
-                               @RequestParam(name="order", required = false) String order,
+                               @RequestParam(name = "order", required = false) String order,
                                @RequestParam(name = "orderBy", required = false) String orderBy,
+                               @RequestParam(name = "minAmount", required = false) Integer minAmount,
+                               @RequestParam(name = "maxAmount", required = false) Integer maxAmount,
                                RedirectAttributes ra) throws UserNotFoundException {
 
-        if(order == null) {
+        if (order == null) {
             order = "id";
         }
-        if(orderBy == null) {
+        if (orderBy == null) {
             orderBy = "asc";
         }
+
         List<Vax> list;
         if (query != null && !query.isEmpty()) {
             list = service.searchVaxes(query);
+        } else if (minAmount != null && maxAmount != null) {
+            list = service.searchVaxesByAmountRange(minAmount, maxAmount);
         } else {
             list = service.findSortedVaxes(order, orderBy);
         }
@@ -128,11 +133,12 @@ public class VaxController {
         }
 
         Cookie[] cookies = request.getCookies();
-        if(userService.checkCookies(cookies, UserRole.STAFF)){
+        if (userService.checkCookies(cookies, UserRole.STAFF)) {
             return "staff_layouts/staff_vax";
         }
         return "access_denied";
     }
+
 
     @GetMapping("patient/vax")
     public String showVaxPatient(Model model, HttpServletRequest request, RedirectAttributes ra) throws UserNotFoundException {

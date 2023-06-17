@@ -32,12 +32,12 @@
 
             <div class="mb-3">
                 <label for="pw" class="form-label">Password</label>
-                <input type="password" class="form-control" id="pw" th:field="*{password}" required minlength="5" maxlength="15" />
+                <input type="password" class="form-control" id="pw" th:field="*{password}" minlength="5" maxlength="15" />
             </div>
 
             <div class="mb-3">
                 <label for="pw2" class="form-label">Repeat password</label>
-                <input type="password" class="form-control" id="pw2" required minlength="5" maxlength="15" />
+                <input type="password" class="form-control" id="pw2" minlength="5" maxlength="15" />
                 <span id="pwError" style="color: red; display: none;">Passwords do not match</span>
             </div>
 

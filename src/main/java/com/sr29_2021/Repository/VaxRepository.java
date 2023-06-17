@@ -171,4 +171,19 @@ public class VaxRepository implements IVaxRepository {
         }
         return rowCallbackHandler.getVaxes();
     }
+
+    @Override
+    public List<Vax> searchVaxesByAmountRange(Integer minAmount, Integer maxAmount) {
+        String sql =
+                "SELECT v.id, v.name, v.available_num, v.manufacturer_id " +
+                        "FROM vax v " +
+                        "JOIN manufacturers m ON v.manufacturer_id = m.id " +
+                        "WHERE v.available_num between ? and ? " +
+                        "ORDER BY v.id";
+
+        VaxRowCallbackHandler rowCallbackHandler = new VaxRowCallbackHandler();
+        jdbcTemplate.query(sql, rowCallbackHandler, minAmount, maxAmount);
+
+        return rowCallbackHandler.getVaxes();
+    }
 }

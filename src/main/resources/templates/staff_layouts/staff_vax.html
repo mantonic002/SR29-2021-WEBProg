@@ -17,12 +17,18 @@
 
   <form th:action="@{/staff/vax}" method="get" class="search-form">
     <div class="input-group">
-      <input type="text" name="query" placeholder="Search" class="form-control" />
+      <input type="text" name="query" placeholder="Search" class="form-control" style="margin-right: 10px;"/>
+      <input type="number" name="minAmount" placeholder="Minimum Amount" class="form-control" />
+      <input type="number" name="maxAmount" placeholder="Maximum Amount" class="form-control" />
       <div class="input-group-append">
-        <button type="submit" class="btn btn-secondary">
+        <button type="submit" class="btn btn-secondary" style="margin-left: 10px;">
           search
         </button>
       </div>
+    </div>
+
+    <div class="input-group mt-3">
+
     </div>
   </form>
 

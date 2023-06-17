@@ -36,4 +36,8 @@ public class VaxService {
     public List<Vax> searchVaxes(String query) {
         return repo.searchVaxes(query);
     }
+
+    public List<Vax> searchVaxesByAmountRange(Integer minAmount, Integer maxAmount) {
+        return repo.searchVaxesByAmountRange(minAmount, maxAmount);
+    }
 }
