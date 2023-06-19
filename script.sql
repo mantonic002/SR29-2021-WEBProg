@@ -2,6 +2,19 @@ DROP SCHEMA IF EXISTS eupravadb;
 CREATE SCHEMA eupravadb DEFAULT CHARACTER SET utf8;
 USE eupravadb;
 
+create table infected_news
+(
+    id            int auto_increment
+        primary key,
+    infected      int      not null,
+    tested        int      not null,
+    hospitalized  int      not null,
+    on_respirator int      not null,
+    date_time     datetime not null,
+    constraint infected_news_pk2
+        unique (id)
+);
+
 create table manufacturers
 (
     id      int auto_increment
@@ -9,6 +22,17 @@ create table manufacturers
     name    varchar(100) not null,
     country varchar(100) not null,
     constraint manufacturers_pk2
+        unique (id)
+);
+
+create table news
+(
+    id        int auto_increment
+        primary key,
+    name      varchar(45)  not null,
+    content   varchar(500) not null,
+    date_time datetime     not null,
+    constraint news_pk2
         unique (id)
 );
 
@@ -26,11 +50,29 @@ create table users
     user_role         varchar(30)  not null,
     registration_date timestamp    not null,
     birth_date        date         not null,
-    constraint users_pk1
-        unique (email),
     constraint users_phone
-        unique (phone_num)
+        unique (phone_num),
+    constraint users_pk1
+        unique (email)
 );
+
+create table patients_info
+(
+    id             int auto_increment
+        primary key,
+    vaxxed         bit      not null,
+    received_doses tinyint  not null,
+    last_dose_date datetime null,
+    user_id        int      not null,
+    constraint patient_info_pk2
+        unique (id),
+    constraint patients_info_ibfk_1
+        foreign key (user_id) references users (id)
+            on delete cascade
+);
+
+create index user_id
+    on patients_info (user_id);
 
 create table vax
 (
@@ -41,65 +83,63 @@ create table vax
     manufacturer_id int          not null,
     constraint vax_pk2
         unique (id),
-    foreign key (manufacturer_id) references manufacturers (id) on delete cascade
+    constraint vax_ibfk_1
+        foreign key (manufacturer_id) references manufacturers (id)
+            on delete cascade
 );
 
-create table  news(
-    id int auto_increment primary key,
-    name varchar(45) not null,
-    content varchar(500) not null,
-    date_ime DATETIME not null,
-    constraint news_pk2
-        unique(id)
-);
-
-create table infected_news(
-    id int auto_increment primary key,
-    infected int not null,
-    tested int not null,
-    hospitalized int not null,
-    on_respirator int not null,
-    date_time DATETIME not null,
-    constraint infected_news_pk2
-        unique(id)
-);
-
-create table patients_info(
-    id int auto_increment primary key,
-    vaxxed bit not null,
-    recieved_doses tinyint not null,
-    last_dose_date datetime not null,
-    user_id int not null,
-    foreign key (user_id) references users(id) on delete cascade,
-    constraint patient_info_pk2
-        unique(id)
-);
-
-create table applications(
-    id int auto_increment primary key,
-    date_time DATETIME not null,
-    patient_id int not null,
-    vax_id int not null,
-    foreign key (patient_id) references users(id) on delete cascade,
-    foreign key (vax_id) references vax(id) on delete cascade,
+create table applications
+(
+    id         int auto_increment
+        primary key,
+    date_time  datetime not null,
+    patient_id int      not null,
+    vax_id     int      not null,
     constraint applications_pk2
-        unique(id)
+        unique (id),
+    constraint applications_ibfk_1
+        foreign key (patient_id) references users (id)
+            on delete cascade,
+    constraint applications_ibfk_2
+        foreign key (vax_id) references vax (id)
+            on delete cascade
 );
 
-create table buy_request(
-    id int auto_increment primary key,
-    amount int not null,
-    reason varchar(255),
-    date date not null,
-    status varchar(100),
-    denial_comment varchar(100),
-    staff_id int not null,
-    vax_id int not null,
-    foreign key (staff_id) references users(id) on delete cascade,
-    foreign key (vax_id) references vax(id) on delete cascade,
+create index patient_id
+    on applications (patient_id);
+
+create index vax_id
+    on applications (vax_id);
+
+create table buy_request
+(
+    id             int auto_increment
+        primary key,
+    amount         int          not null,
+    reason         varchar(255) null,
+    date_time      datetime     not null,
+    denial_comment varchar(100) null,
+    staff_id       int          not null,
+    vax_id         int          not null,
+    status         varchar(30)  not null,
     constraint buy_request_pk2
-        unique(id)
-)
+        unique (id),
+    constraint buy_request_ibfk_1
+        foreign key (staff_id) references users (id)
+            on delete cascade,
+    constraint buy_request_ibfk_2
+        foreign key (vax_id) references vax (id)
+            on delete cascade
+);
+
+create index staff_id
+    on buy_request (staff_id);
+
+create index vax_id
+    on buy_request (vax_id);
+
+create index manufacturer_id
+    on vax (manufacturer_id);
 
 CREATE FUNCTION get_total_infected(news_id INT) RETURNS INT
 READS SQL DATA
